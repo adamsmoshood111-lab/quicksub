@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>QuickSub | Digital Services Made Simple</title>
+
+    <meta name="description" content="QuickSub makes purchasing mobile data and digital services simple and convenient.">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #ffffff;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e8ebf2;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            color: #155eef;
+        }
+
+        .logo span {
+            color: #16a673;
+        }
+
+        .account-button {
+            background: #155eef;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .hero {
+            padding: 65px 6% 50px;
+            text-align: center;
+            background: linear-gradient(135deg, #102a56, #155eef);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: clamp(30px, 6vw, 48px);
+            line-height: 1.2;
+            margin-bottom: 18px;
+        }
+
+        .hero p {
+            max-width: 520px;
+            margin: 0 auto 25px;
+            color: #e3ebff;
+        }
+
+        .hero-button {
+            display: inline-block;
+            background: #ffffff;
+            color: #155eef;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 13px 24px;
+            border-radius: 8px;
+        }
+
+        main {
+            max-width: 1050px;
+            margin: auto;
+            padding: 45px 6%;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .section-heading h2 {
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
+
+        .section-heading p {
+            color: #687386;
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+            gap: 16px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 25px 12px;
+            text-align: center;
+            border-radius: 12px;
+            border: 1px solid #e8ebf2;
+        }
+
+        .service-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .service-card h3 {
+            font-size: 16px;
+        }
+
+        .service-card p {
+            font-size: 12px;
+            color: #687386;
+            margin-top: 5px;
+        }
+
+        .notice {
+            margin-top: 30px;
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #e8ebf2;
+        }
+
+        .notice p {
+            color: #687386;
+            font-size: 14px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #687386;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">Quick<span>Sub</span></div>
+        <a class="account-button" href="#services">Get Started</a>
+    </header>
+
+    <section class="hero">
+        <h1>Your Digital Services,<br>Made Simple.</h1>
+
+        <p>
+            A simpler way to access mobile data and digital services,
+            all in one convenient place.
+        </p>
+
+        <a class="hero-button" href="#services">Explore Services</a>
+    </section>
+
+    <main id="services">
+        <div class="section-heading">
+            <h2>Our Services</h2>
+            <p>Choose a service to get started.</p>
+        </div>
+
+        <div class="services">
+
+            <div class="service-card">
+                <div class="service-icon">📶</div>
+                <h3>Data Bundles</h3>
+                <p>Explore available data plans.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">📱</div>
+                <h3>Airtime</h3>
+                <p>Mobile airtime services.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">⚡</div>
+                <h3>Electricity</h3>
+                <p>Electricity payment services.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">📺</div>
+                <h3>Cable TV</h3>
+                <p>Television subscription services.</p>
+            </div>
+
+        </div>
+
+        <div class="notice">
+            <h3>Welcome to QuickSub</h3>
+            <p>
+                We're building a convenient platform for digital services.
+                Service availability and purchases will be enabled as
+                development progresses.
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 QuickSub. All rights reserved.
+    </footer>
+
+</body>
+</html>
