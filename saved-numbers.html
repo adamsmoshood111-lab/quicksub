@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1220">
+  <title>Saved Numbers | QuickSub">
+
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #111c2e;
+      --text: #f8fafc;
+      --muted: #9caec4;
+      --green: #4ade80;
+      --green-dark: #16a34a;
+      --border: #293950;
+      --danger: #f87171;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input, select {
+      font: inherit;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      padding: 16px 5%;
+      background: #0e1828;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      font-size: 26px;
+      font-weight: 800;
+    }
+
+    .brand span {
+      color: var(--green);
+    }
+
+    .nav-link {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      padding: 32px 20px 50px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin: 0 0 8px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      margin: 0 0 26px;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 23px;
+      margin-bottom: 24px;
+    }
+
+    .panel h2 {
+      font-size: 19px;
+      margin: 0 0 20px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 17px;
+    }
+
+    .field {
+      min-width: 0;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 17px;
+    }
+
+    .checkbox-row input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--green-dark);
+    }
+
+    .checkbox-row label {
+      margin: 0;
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .button {
+      padding: 12px 17px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .button-primary {
+      background: var(--green-dark);
+      color: white;
+      border-color: var(--green-dark);
+    }
+
+    .button-secondary {
+      background: transparent;
+      color: var(--text);
+    }
+
+    .button-danger {
+      background: transparent;
+      color: var(--danger);
+      border-color: #713535;
+    }
+
+    .button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .message {
+      display: none;
+      padding: 13px;
+      margin-bottom: 18px;
+      border-radius: 9px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .message.success {
+      display: block;
+      color: #bbf7d0;
+      background: #143323;
+      border: 1px solid #24633d;
+    }
+
+    .message.error {
+      display: block;
+      color: #fecaca;
+      background: #351c27;
+      border: 1px solid #713545;
+    }
+
+    .number-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .number-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 17px;
+      background: #0e1828;
+    }
+
+    .number-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .number-name {
+      font-size: 16px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .favourite {
+      color: #fbbf24;
+      font-size: 20px;
+    }
+
+    .number-phone {
+      font-size: 15px;
+      margin-top: 8px;
+    }
+
+    .number-network {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 5px 9px;
+      background: #172a43;
+      color: #dbeafe;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+
+    .number-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 17px;
+    }
+
+    .number-actions .button {
+      padding: 9px 12px;
+    }
+
+    .empty {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      padding: 10px 0;
+    }
+
+    footer {
+      padding: 22px 15px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 550px) {
+      .navbar {
+        padding: 15px 18px;
+      }
+
+      .brand {
+        font-size: 23px;
+      }
+
+      .container {
+        padding: 25px 14px 35px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .panel {
+        padding: 18px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .actions .button {
+        flex: 1;
+      }
+
+      .number-top {
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="navbar">
+    <a class="brand" href="index.html">Quick<span>Sub</span></a>
+    <a class="nav-link" href="dashboard.html">← Dashboard</a>
+  </header>
+
+  <main class="container">
+    <h1>Saved Numbers</h1>
+    <p class="subtitle">
+      Save frequently used recipients for easier future purchases.
+      Saving a number will never make a purchase automatically.
+    </p>
+
+    <div id="message" class="message" role="alert" aria-live="polite"></div>
+
+    <section class="panel" id="formPanel">
+      <h2 id="formTitle">Add a Number</h2>
+
+      <form id="numberForm">
+        <div class="form-grid">
+          <div class="field">
+            <label for="label">Name or label</label>
+            <input
+              type="text"
+              id="label"
+              name="label"
+              maxlength="60"
+              placeholder="e.g. Personal phone"
+              required
+            >
+          </div>
+
+          <div class="field">
+            <label for="phone">Phone number</label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              inputmode="tel"
+              maxlength="20"
+              placeholder="e.g. 08012345678"
+              required
+            >
+          </div>
+
+          <div class="field full">
+            <label for="network">Network</label>
+            <select id="network" name="network" required>
+              <option value="">Select a network</option>
+              <option value="MTN">MTN</option>
+              <option value="Airtel">Airtel</option>
+              <option value="Glo">Glo</option>
+              <option value="9mobile">9mobile</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="isFavourite" name="isFavourite">
+          <label for="isFavourite">Mark as a favourite</label>
+        </div>
+
+        <div class="actions">
+          <button class="button button-primary" type="submit" id="saveButton">
+            Save Number
+          </button>
+
+          <button
+            class="button button-secondary"
+            type="button"
+            id="cancelButton"
+            hidden
+          >
+            Cancel Edit
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>Your Saved Numbers</h2>
+      <div id="numberList" class="number-list">
+        <p class="empty">Loading saved numbers...</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; <span id="year"></span> QuickSub. All rights reserved.
+  </footer>
+
+  <script>
+    const form = document.getElementById("numberForm");
+    const message = document.getElementById("message");
+    const numberList = document.getElementById("numberList");
+    const formTitle = document.getElementById("formTitle");
+    const saveButton = document.getElementById("saveButton");
+    const cancelButton = document.getElementById("cancelButton");
+
+    let editingId = null;
+    let numbers = [];
+    let loading = false;
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = "message " + type;
+    }
+
+    function clearMessage() {
+      message.textContent = "";
+      message.className = "message";
+    }
+
+    async function apiRequest(method, body) {
+      const options = {
+        method,
+        credentials: "same-origin",
+        cache: "no-store",
+        headers: {}
+      };
+
+      if (body !== undefined) {
+        options.headers["Content-Type"] = "application/json";
+        options.body = JSON.stringify(body);
+      }
+
+      const response = await fetch("/api/saved-numbers", options);
+
+      if (response.status === 401 || response.status === 403) {
+        window.location.replace("login.html");
+        throw new Error("Please sign in again.");
+      }
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(
+          result.message || "The request could not be completed."
+        );
+      }
+
+      return result;
+    }
+
+    async function loadNumbers() {
+      if (loading) return;
+
+      loading = true;
+      numberList.replaceChildren();
+
+      const loadingText = document.createElement("p");
+      loadingText.className = "empty";
+      loadingText.textContent = "Loading saved numbers...";
+      numberList.appendChild(loadingText);
+
+      try {
+        const result = await apiRequest("GET");
+        numbers = Array.isArray(result.numbers) ? result.numbers : [];
+        renderNumbers();
+      } catch (error) {
+        numberList.replaceChildren();
+
+        const errorText = document.createElement("p");
+        errorText.className = "empty";
+        errorText.textContent =
+          "Saved numbers could not be loaded. Please try again.";
+        numberList.appendChild(errorText);
+      } finally {
+        loading = false;
+      }
+    }
+
+    function renderNumbers() {
+      numberList.replaceChildren();
+
+      if (numbers.length === 0) {
+        const empty = document.createElement("p");
+        empty.className = "empty";
+        empty.textContent =
+          "You have no saved numbers yet. Add your first number using the form above.";
+        numberList.appendChild(empty);
+        return;
+      }
+
+      const sortedNumbers = [...numbers].sort(
+        (a, b) => Number(b.is_favourite) - Number(a.is_favourite)
+      );
+
+      for (const number of sortedNumbers) {
+        const card = document.createElement("article");
+        card.className = "number-card";
+
+        const top = document.createElement("div");
+        top.className = "number-top";
+
+        const details = document.createElement("div");
+
+        const name = document.createElement("div");
+        name.className = "number-name";
+        name.textContent = number.label || "Saved number";
+
+        const phone = document.createElement("div");
+        phone.className = "number-phone";
+        phone.textContent = number.phone || "";
+
+        const network = document.createElement("span");
+        network.className = "number-network";
+        network.textContent = number.network || "Network unavailable";
+
+        details.append(name, phone, network);
+        top.appendChild(details);
+
+        if (Number(number.is_favourite) === 1 || number.is_favourite === true) {
+          const star = document.createElement("span");
+          star.className = "favourite";
+          star.textContent = "★";
+          star.setAttribute("aria-label", "Favourite");
+          top.appendChild(star);
+        }
+
+        const actions = document.createElement("div");
+        actions.className = "number-actions";
+
+        const editButton = document.createElement("button");
+        editButton.className = "button button-secondary";
+        editButton.type = "button";
+        editButton.textContent = "Edit";
+        editButton.addEventListener("click", () => startEdit(number));
+
+        const favouriteButton = document.createElement("button");
+        favouriteButton.className = "button button-secondary";
+        favouriteButton.type = "button";
+        favouriteButton.textContent =
+          Number(number.is_favourite) === 1 || number.is_favourite === true
+            ? "Remove Favourite"
+            : "Make Favourite";
+
+        favouriteButton.addEventListener("click", () =>
+          toggleFavourite(number)
+        );
+
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "button button-danger";
+        deleteButton.type = "button";
+        deleteButton.textContent = "Delete";
+        deleteButton.addEventListener("click", () => deleteNumber(number));
+
+        actions.append(editButton, favouriteButton, deleteButton);
+        card.append(top, actions);
+        numberList.appendChild(card);
+      }
+    }
+
+    function startEdit(number) {
+      editingId = number.id;
+
+      document.getElementById("label").value = number.label || "";
+      document.getElementById("phone").value = number.phone || "";
+      document.getElementById("network").value = number.network || "";
+      document.getElementById("isFavourite").checked =
+        Number(number.is_favourite) === 1 ||
+        number.is_favourite === true;
+
+      formTitle.textContent = "Edit Saved Number";
+      saveButton.textContent = "Update Number";
+      cancelButton.hidden = false;
+
+      clearMessage();
+      document.getElementById("formPanel").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+
+    function resetForm() {
+      form.reset();
+      editingId = null;
+      formTitle.textContent = "Add a Number";
+      saveButton.textContent = "Save Number";
+      cancelButton.hidden = true;
+    }
+
+    async function toggleFavourite(number) {
+      clearMessage();
+
+      try {
+        await apiRequest("PUT", {
+          id: number.id,
+          label: number.label,
+          phone: number.phone,
+          network: number.network,
+          isFavourite:
+            !(Number(number.is_favourite) === 1 ||
+              number.is_favourite === true)
+        });
+
+        showMessage("Favourite setting updated.", "success");
+        await loadNumbers();
+      } catch (error) {
+        showMessage(error.message, "error");
+      }
+    }
+
+    async function deleteNumber(number) {
+      const confirmed = window.confirm(
+        "Delete the saved number for " + number.label + "?"
+      );
+
+      if (!confirmed) return;
+
+      clearMessage();
+
+      try {
+        await apiRequest("DELETE", { id: number.id });
+
+        if (editingId === number.id) {
+          resetForm();
+        }
+
+        showMessage("Saved number deleted.", "success");
+        await loadNumbers();
+      } catch (error) {
+        showMessage(error.message, "error");
+      }
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      clearMessage();
+
+      const body = {
+        label: document.getElementById("label").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        network: document.getElementById("network").value,
+        isFavourite: document.getElementById("isFavourite").checked
+      };
+
+      if (!body.label || !body.phone || !body.network) {
+        showMessage("Please complete all required fields.", "error");
+        return;
+      }
+
+      saveButton.disabled = true;
+      cancelButton.disabled = true;
+
+      try {
+        if (editingId) {
+          await apiRequest("PUT", {
+            id: editingId,
+            ...body
+          });
+
+          showMessage("Saved number updated successfully.", "success");
+        } else {
+          await apiRequest("POST", body);
+
+          showMessage("Number saved successfully.", "success");
+        }
+
+        resetForm();
+        await loadNumbers();
+      } catch (error) {
+        showMessage(error.message, "error");
+      } finally {
+        saveButton.disabled = false;
+        cancelButton.disabled = false;
+      }
+    });
+
+    cancelButton.addEventListener("click", () => {
+      resetForm();
+      clearMessage();
+    });
+
+    loadNumbers();
+  </script>
+</body>
+  </html>
