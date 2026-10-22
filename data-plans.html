@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101713">
+  <title>Available Data Bundles | QuickSub">
+
+  <style>
+    :root {
+      --background: #101713;
+      --surface: #19231d;
+      --green: #35d07f;
+      --text: #f5f7f5;
+      --muted: #a8b5ac;
+      --border: #2d3b32;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      padding: 18px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--green);
+    }
+
+    .back-link {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    main {
+      width: min(100% - 36px, 1000px);
+      margin: 42px auto;
+    }
+
+    .eyebrow {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: clamp(29px, 6vw, 42px);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      color: var(--muted);
+      margin-bottom: 26px;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .count {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .refresh-button {
+      background: transparent;
+      color: var(--green);
+      border: 1px solid var(--green);
+      border-radius: 8px;
+      padding: 9px 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .plan-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .plan-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .plan-category {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .plan-name {
+      font-size: 21px;
+      margin-bottom: 7px;
+      overflow-wrap: anywhere;
+    }
+
+    .plan-network {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .plan-price {
+      font-size: 25px;
+      font-weight: bold;
+      margin: 18px 0;
+    }
+
+    .select-button {
+      display: block;
+      text-align: center;
+      background: var(--green);
+      color: #092014;
+      border-radius: 9px;
+      padding: 12px;
+      font-weight: bold;
+      margin-top: auto;
+    }
+
+    .select-button:hover {
+      filter: brightness(1.08);
+    }
+
+    .message {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      color: var(--muted);
+    }
+
+    .message strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .back-categories {
+      display: inline-block;
+      color: var(--green);
+      margin-top: 25px;
+      font-weight: bold;
+    }
+
+    footer {
+      margin-top: 60px;
+      padding: 24px 15px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 520px) {
+      header {
+        padding: 16px 18px;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+
+      main {
+        margin-top: 32px;
+      }
+
+      .plan-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .plan-card {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="logo" href="index.html">Quick<span>Sub</span></a>
+    <a class="back-link" id="backLink" href="data.html">← Back</a>
+  </header>
+
+  <main>
+    <p class="eyebrow">Choose Your Bundle</p>
+    <h1 id="pageTitle">Available Data Bundles</h1>
+
+    <p class="intro" id="intro">
+      Browse available bundles and compare their selling prices.
+    </p>
+
+    <div class="toolbar">
+      <p class="count" id="count">Loading bundles...</p>
+      <button class="refresh-button" id="refreshButton" type="button">
+        Refresh
+      </button>
+    </div>
+
+    <div id="loading" class="message">
+      Loading available data bundles...
+    </div>
+
+    <div id="error" class="message hidden" role="alert">
+      <strong>Unable to load bundles</strong>
+      Please check your connection and try again.
+    </div>
+
+    <div id="invalid" class="message hidden">
+      <strong>Invalid selection</strong>
+      Please select a network and category first.
+      <p><a class="back-categories" href="data.html">Choose a network →</a></p>
+    </div>
+
+    <div id="empty" class="message hidden">
+      <strong>No bundles available</strong>
+      There are currently no active bundles configured for this category.
+      Please check again later.
+    </div>
+
+    <section
+      id="planGrid"
+      class="plan-grid hidden"
+      aria-label="Available data bundles">
+    </section>
+
+    <a class="back-categories" id="categoryBack" href="data.html">
+      ← Back to Categories
+    </a>
+  </main>
+
+  <footer>
+    © <span id="year"></span> QuickSub. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    const allowedNetworks = ["MTN", "Airtel", "Glo", "9mobile"];
+    const params = new URLSearchParams(window.location.search);
+
+    const requestedNetwork = params.get("network") || "";
+    const category = params.get("category") || "";
+
+    const network = allowedNetworks.find(
+      item => item.toLowerCase() === requestedNetwork.toLowerCase()
+    );
+
+    const pageTitle = document.getElementById("pageTitle");
+    const intro = document.getElementById("intro");
+    const count = document.getElementById("count");
+    const loading = document.getElementById("loading");
+    const errorBox = document.getElementById("error");
+    const invalid = document.getElementById("invalid");
+    const empty = document.getElementById("empty");
+    const planGrid = document.getElementById("planGrid");
+    const refreshButton = document.getElementById("refreshButton");
+    const backLink = document.getElementById("backLink");
+    const categoryBack = document.getElementById("categoryBack");
+
+    if (network && category) {
+      const categoryUrl =
+        "data-categories.html?network=" +
+        encodeURIComponent(network);
+
+      backLink.href = categoryUrl;
+      categoryBack.href = categoryUrl;
+      pageTitle.textContent = network + " " + category;
+      intro.textContent =
+        "Compare the available bundles and selling prices for this category.";
+    }
+
+    function hideMessages() {
+      loading.classList.add("hidden");
+      errorBox.classList.add("hidden");
+      invalid.classList.add("hidden");
+      empty.classList.add("hidden");
+      planGrid.classList.add("hidden");
+    }
+
+    function showInvalid() {
+      hideMessages();
+      invalid.classList.remove("hidden");
+      count.textContent = "";
+      backLink.href = "data.html";
+      categoryBack.href = "data.html";
+    }
+
+    function formatNaira(minorUnits) {
+      if (!Number.isSafeInteger(minorUnits) || minorUnits <= 0) {
+        return null;
+      }
+
+      return new Intl.NumberFormat("en-NG", {
+        style: "currency",
+        currency: "NGN",
+        maximumFractionDigits: 2
+      }).format(minorUnits / 100);
+    }
+
+    function createPlanCard(plan) {
+      const card = document.createElement("article");
+      card.className = "plan-card";
+
+      const categoryLabel = document.createElement("p");
+      categoryLabel.className = "plan-category";
+      categoryLabel.textContent = plan.category;
+
+      const name = document.createElement("h2");
+      name.className = "plan-name";
+      name.textContent = plan.name;
+
+      const networkLabel = document.createElement("p");
+      networkLabel.className = "plan-network";
+      networkLabel.textContent = plan.network;
+
+      const price = document.createElement("p");
+      price.className = "plan-price";
+      price.textContent = formatNaira(plan.selling_price_minor);
+
+      const select = document.createElement("a");
+      select.className = "select-button";
+      select.textContent = "Select Bundle";
+
+      const nextUrl = new URL("data-order.html", window.location.href);
+      nextUrl.searchParams.set("plan", plan.id);
+      nextUrl.searchParams.set("network", network);
+      nextUrl.searchParams.set("category", category);
+
+      select.href = nextUrl.pathname + nextUrl.search;
+
+      card.append(
+        categoryLabel,
+        name,
+        networkLabel,
+        price,
+        select
+      );
+
+      return card;
+    }
+
+    async function loadPlans() {
+      if (!network || !category.trim()) {
+        showInvalid();
+        return;
+      }
+
+      hideMessages();
+      loading.classList.remove("hidden");
+      count.textContent = "Loading bundles...";
+      planGrid.replaceChildren();
+
+      try {
+        const query = new URLSearchParams({
+          service: "data",
+          network: network,
+          category: category
+        });
+
+        const response = await fetch(
+          "/api/plans?" + query.toString(),
+          {
+            method: "GET",
+            headers: { "Accept": "application/json" },
+            cache: "no-store"
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Catalogue request failed.");
+        }
+
+        const result = await response.json();
+
+        if (!result.success || !Array.isArray(result.plans)) {
+          throw new Error("Unexpected catalogue response.");
+        }
+
+        const plans = result.plans.filter(plan =>
+          typeof plan.network === "string" &&
+          plan.network.toLowerCase() === network.toLowerCase() &&
+          typeof plan.category === "string" &&
+          plan.category === category &&
+          typeof plan.name === "string" &&
+          typeof plan.id === "string" &&
+          Number.isSafeInteger(plan.selling_price_minor) &&
+          plan.selling_price_minor > 0
+        );
+
+        hideMessages();
+
+        if (plans.length === 0) {
+          empty.classList.remove("hidden");
+          count.textContent = "0 bundles";
+          return;
+        }
+
+        plans.forEach(plan => {
+          planGrid.appendChild(createPlanCard(plan));
+        });
+
+        planGrid.classList.remove("hidden");
+        count.textContent =
+          plans.length + (plans.length === 1 ? " bundle" : " bundles");
+
+      } catch (error) {
+        hideMessages();
+        errorBox.classList.remove("hidden");
+        count.textContent = "";
+      }
+    }
+
+    refreshButton.addEventListener("click", loadPlans);
+    loadPlans();
+  </script>
+</body>
+  </html>
