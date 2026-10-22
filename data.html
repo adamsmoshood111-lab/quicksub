@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101713">
+  <title>Data Bundles | QuickSub</title>
+
+  <style>
+    :root {
+      --background: #101713;
+      --surface: #19231d;
+      --green: #35d07f;
+      --text: #f5f7f5;
+      --muted: #a8b5ac;
+      --border: #2d3b32;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--green);
+    }
+
+    .back-link {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    main {
+      width: min(100% - 36px, 1000px);
+      margin: 45px auto;
+    }
+
+    .eyebrow {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: clamp(30px, 6vw, 46px);
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    .intro {
+      color: var(--muted);
+      max-width: 580px;
+      margin-bottom: 32px;
+    }
+
+    .network-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .network-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      min-height: 155px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .network-card:hover {
+      border-color: var(--green);
+      transform: translateY(-3px);
+    }
+
+    .network-name {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .network-description {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .choose {
+      color: var(--green);
+      font-size: 14px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .notice {
+      margin-top: 28px;
+      padding: 16px;
+      background: #19231d;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 24px 15px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 60px;
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 16px 18px;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+
+      main {
+        margin-top: 35px;
+      }
+
+      .network-grid {
+        gap: 11px;
+      }
+
+      .network-card {
+        padding: 16px;
+        min-height: 145px;
+      }
+
+      .network-name {
+        font-size: 19px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="logo" href="index.html">Quick<span>Sub</span></a>
+    <a class="back-link" href="index.html">← Back to Home</a>
+  </header>
+
+  <main>
+    <p class="eyebrow">Stay Connected</p>
+    <h1>Buy Data Bundles</h1>
+
+    <p class="intro">
+      Choose your mobile network to explore available data categories
+      and bundles. Prices will be displayed before you confirm an order.
+    </p>
+
+    <section class="network-grid" aria-label="Choose a mobile network">
+      <a class="network-card" href="data-categories.html?network=MTN">
+        <div>
+          <div class="network-name">MTN</div>
+          <p class="network-description">Explore MTN data categories</p>
+        </div>
+        <span class="choose">Choose Network →</span>
+      </a>
+
+      <a class="network-card" href="data-categories.html?network=Airtel">
+        <div>
+          <div class="network-name">Airtel</div>
+          <p class="network-description">Explore Airtel data categories</p>
+        </div>
+        <span class="choose">Choose Network →</span>
+      </a>
+
+      <a class="network-card" href="data-categories.html?network=Glo">
+        <div>
+          <div class="network-name">Glo</div>
+          <p class="network-description">Explore Glo data categories</p>
+        </div>
+        <span class="choose">Choose Network →</span>
+      </a>
+
+      <a class="network-card" href="data-categories.html?network=9mobile">
+        <div>
+          <div class="network-name">9mobile</div>
+          <p class="network-description">Explore 9mobile data categories</p>
+        </div>
+        <span class="choose">Choose Network →</span>
+      </a>
+    </section>
+
+    <div class="notice">
+      <strong>Important:</strong> Available bundles and prices will depend
+      on the plans configured in QuickSub. Selecting a network does not
+      make a purchase.
+    </div>
+  </main>
+
+  <footer>
+    © <span id="year"></span> QuickSub. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+  </script>
+</body>
+  </html>
