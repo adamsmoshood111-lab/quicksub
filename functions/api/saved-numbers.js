@@ -204,7 +204,16 @@ try {
 }
 
 const id = typeof body.id === "string" ? body.id.trim() : "";
-
+if (
+  !body ||
+  typeof body !== "object" ||
+  Array.isArray(body)
+) {
+  return json({
+    success: false,
+    message: "Invalid request data."
+  }, 400);
+}
 if (!id) {
   return json({ success: false, message: "A saved number ID is required." }, 400);
 }
