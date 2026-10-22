@@ -203,7 +203,6 @@ try {
   return json({ success: false, message: "Invalid request data." }, 400);
 }
 
-const id = typeof body.id === "string" ? body.id.trim() : "";
 if (
   !body ||
   typeof body !== "object" ||
@@ -214,6 +213,8 @@ if (
     message: "Invalid request data."
   }, 400);
 }
+
+const id = typeof body.id === "string" ? body.id.trim() : "";
 if (!id) {
   return json({ success: false, message: "A saved number ID is required." }, 400);
 }
