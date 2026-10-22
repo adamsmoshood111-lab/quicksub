@@ -9,7 +9,11 @@ const json = (data, status = 200, headers = {}) =>
 
 function decodeBase64(value) {
   const binary = atob(value);
-  return Uint8Array.from(binary, (char) => char.charCodeAt(0));
+
+  return Uint8Array.from(
+    binary,
+    (char) => char.charCodeAt(0)
+  );
 }
 
 function bytesToHex(bytes) {
@@ -23,65 +27,101 @@ async function hashToken(token) {
     "SHA-256",
     new TextEncoder().encode(token)
   );
+
   return bytesToHex(new Uint8Array(digest));
 }
 
 async function verifyPassword(password, storedHash) {
-  const parts = storedHash.split("$");
+  try {
+    if (typeof storedHash !== "string") {
+      return false;
+    }
 
-  if (
-    parts.length !== 4 ||
-    parts[0] !== "pbkdf2_sha256" ||
-    parts[1] !== "600000"
-  ) {
+    const parts = storedHash.split("$");
+
+    if (
+      parts.length !== 4 ||
+      parts[0] !== "pbkdf2_sha256" ||
+      parts[1] !== "600000"
+    ) {
+      return false;
+    }
+
+    const salt = decodeBase64(parts[2]);
+    const expected = decodeBase64(parts[3]);
+
+    if (salt.length !== 16 || expected.length !== 32) {
+      return false;
+    }
+
+    const key = await crypto.subtle.importKey(
+      "raw",
+      new TextEncoder().encode(password),
+      "PBKDF2",
+      false,
+      ["deriveBits"]
+    );
+
+    const result = await crypto.subtle.deriveBits(
+      {
+        name: "PBKDF2",
+        salt,
+        iterations: 600000,
+        hash: "SHA-256"
+      },
+      key,
+      256
+    );
+
+    const actual = new Uint8Array(result);
+
+    let difference = 0;
+
+    for (let i = 0; i < actual.length; i++) {
+      difference |= actual[i] ^ expected[i];
+    }
+
+    return difference === 0;
+  } catch {
     return false;
   }
-
-  const salt = decodeBase64(parts[2]);
-  const expected = decodeBase64(parts[3]);
-
-  const key = await crypto.subtle.importKey(
-    "raw",
-    new TextEncoder().encode(password),
-    "PBKDF2",
-    false,
-    ["deriveBits"]
-  );
-
-  const result = await crypto.subtle.deriveBits(
-    {
-      name: "PBKDF2",
-      salt,
-      iterations: 600000,
-      hash: "SHA-256"
-    },
-    key,
-    256
-  );
-
-  const actual = new Uint8Array(result);
-
-  if (actual.length !== expected.length) return false;
-
-  let difference = 0;
-
-  for (let i = 0; i < actual.length; i++) {
-    difference |= actual[i] ^ expected[i];
-  }
-
-  return difference === 0;
 }
 
 export async function onRequestPost({ request, env }) {
   try {
     if (!env.DB) {
-      return json({
-        success: false,
-        message: "Service temporarily unavailable."
-      }, 503);
+      return json(
+        {
+          success: false,
+          message: "Service temporarily unavailable."
+        },
+        503
+      );
     }
 
-    const body = await request.json();
+    let body;
+
+    try {
+      body = await request.json();
+    } catch {
+      return json(
+        {
+          success: false,
+          message: "Invalid request data."
+        },
+        400
+      );
+    }
+
+    if (!body || typeof body !== "object" || Array.isArray(body)) {
+      return json(
+        {
+          success: false,
+          message: "Invalid request data."
+        },
+        400
+      );
+    }
 
     const email =
       typeof body.email === "string"
@@ -93,11 +133,20 @@ export async function onRequestPost({ request, env }) {
         ? body.password
         : "";
 
-    if (!email || !password || password.length > 128) {
-      return json({
-        success: false,
-        message: "Enter your email address and password."
-      }, 400);
+    if (
+      !email ||
+      email.length > 254 ||
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
+      !password ||
+      password.length > 128
+    ) {
+      return json(
+        {
+          success: false,
+          message: "Enter a valid email address and password."
+        },
+        400
+      );
     }
 
     const customer = await env.DB.prepare(
@@ -105,21 +154,29 @@ export async function onRequestPost({ request, env }) {
        FROM customers
        WHERE email = ?
        LIMIT 1`
-    ).bind(email).first();
+    )
+      .bind(email)
+      .first();
 
     if (
       !customer ||
       customer.status !== "active" ||
       !(await verifyPassword(password, customer.password_hash))
     ) {
-      return json({
-        success: false,
-        message: "Invalid email or password."
-      }, 401);
+      return json(
+        {
+          success: false,
+          message: "Invalid email or password."
+        },
+        401
+      );
     }
 
-    // Create a random session token.
-    const randomBytes = crypto.getRandomValues(new Uint8Array(32));
+    // Generate a cryptographically random session token.
+    const randomBytes = crypto.getRandomValues(
+      new Uint8Array(32)
+    );
+
     const token = btoa(
       String.fromCharCode(...randomBytes)
     )
@@ -127,7 +184,7 @@ export async function onRequestPost({ request, env }) {
       .replace(/\//g, "_")
       .replace(/=+$/g, "");
 
-    // Store only the hash of the session token in the database.
+    // Store only the SHA-256 hash of the session token.
     const tokenHash = await hashToken(token);
 
     const expiresAt = new Date(
@@ -135,9 +192,23 @@ export async function onRequestPost({ request, env }) {
     ).toISOString();
 
     await env.DB.prepare(
-      `INSERT INTO sessions (id_hash, customer_id, expires_at)
+      `INSERT INTO sessions (
+         id_hash,
+         customer_id,
+         expires_at
+       )
        VALUES (?, ?, ?)`
-    ).bind(tokenHash, customer.id, expiresAt).run();
+    )
+      .bind(tokenHash, customer.id, expiresAt)
+      .run();
+
+    const cookie =
+      `quicksub_session=${token}; ` +
+      "Max-Age=604800; " +
+      "Path=/; " +
+      "HttpOnly; " +
+      "Secure; " +
+      "SameSite=Lax";
 
     return json(
       {
@@ -146,4 +217,21 @@ export async function onRequestPost({ request, env }) {
         customer: {
           id: customer.id,
           fullName: customer.full_name,
-          email: customer
+          email: customer.email
+        }
+      },
+      200,
+      {
+        "Set-Cookie": cookie
+      }
+    );
+  } catch (error) {
+    return json(
+      {
+        success: false,
+        message: "Unable to sign in right now. Please try again."
+      },
+      500
+    );
+  }
+}
