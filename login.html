@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1730">
+  <meta name="description" content="Sign in securely to your QuickSub account.">
+  <title>Log In | QuickSub</title>
+
+  <style>
+    :root {
+      --navy: #0b1730;
+      --blue: #2563eb;
+      --green: #16a34a;
+      --text: #172033;
+      --muted: #687386;
+      --background: #f5f7fb;
+      --white: #ffffff;
+      --border: #e7ebf2;
+      --danger: #b42318;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      width: min(1120px, 92%);
+      min-height: 72px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: var(--navy);
+    }
+
+    .logo span {
+      color: var(--green);
+    }
+
+    .back-link {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    main {
+      flex: 1;
+      display: grid;
+      place-items: center;
+      padding: 45px 16px;
+    }
+
+    .login-card {
+      width: min(100%, 440px);
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 34px;
+      box-shadow: 0 15px 45px #1023440b;
+    }
+
+    .eyebrow {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      color: var(--navy);
+      font-size: 32px;
+      line-height: 1.2;
+      margin: 9px 0 10px;
+    }
+
+    .intro {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 27px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--navy);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      min-height: 48px;
+      border: 1px solid #d5dce7;
+      border-radius: 9px;
+      padding: 12px 13px;
+      font: inherit;
+      font-size: 15px;
+      background: var(--white);
+    }
+
+    input:focus {
+      outline: 3px solid #2563eb25;
+      border-color: var(--blue);
+    }
+
+    .forgot {
+      display: block;
+      text-align: right;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: -7px;
+      margin-bottom: 21px;
+    }
+
+    .submit-button {
+      width: 100%;
+      min-height: 49px;
+      border: 0;
+      border-radius: 9px;
+      background: var(--blue);
+      color: var(--white);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .submit-button:hover {
+      background: #1d4ed8;
+    }
+
+    .submit-button:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .message {
+      display: none;
+      margin-bottom: 18px;
+      padding: 11px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .message.error {
+      display: block;
+      color: var(--danger);
+      background: #fef3f2;
+      border: 1px solid #fecdca;
+    }
+
+    .message.success {
+      display: block;
+      color: #166534;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+    }
+
+    .signup {
+      margin-top: 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .signup a {
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    footer {
+      padding: 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 480px) {
+      .login-card {
+        padding: 25px 20px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a class="logo" href="index.html" aria-label="QuickSub homepage">
+        Quick<span>Sub</span>
+      </a>
+
+      <a class="back-link" href="index.html">← Back to home</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="login-card" aria-labelledby="login-heading">
+      <div class="eyebrow">Welcome back</div>
+      <h1 id="login-heading">Log in to QuickSub</h1>
+
+      <p class="intro">
+        Sign in to manage your account and access your digital services.
+      </p>
+
+      <div id="message" class="message" role="alert" aria-live="polite"></div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="username"
+            maxlength="254"
+            placeholder="you@example.com"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            required
+          >
+        </div>
+
+        <a class="forgot" href="forgot-password.html">
+          Forgot your password?
+        </a>
+
+        <button id="submit-button" class="submit-button" type="submit">
+          Log In
+        </button>
+      </form>
+
+      <p class="signup">
+        Don't have an account?
+        <a href="register.html">Create an account</a>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; <span id="year"></span> QuickSub. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    const form = document.getElementById("login-form");
+    const message = document.getElementById("message");
+    const submitButton = document.getElementById("submit-button");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      message.className = "message";
+      message.textContent = "";
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Signing in...";
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      try {
+        const response = await fetch("/api/login", {
+          method: "POST",
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email, password })
+        });
+
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok || !result.success) {
+          message.className = "message error";
+          message.textContent =
+            result.message || "Unable to sign in. Please try again.";
+          return;
+        }
+
+        message.className = "message success";
+        message.textContent = "Login successful. Opening your dashboard...";
+
+        window.location.assign("dashboard.html");
+      } catch (error) {
+        message.className = "message error";
+        message.textContent =
+          "Unable to connect. Please check your connection and try again.";
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Log In";
+      }
+    });
+  </script>
+</body>
+</html>
