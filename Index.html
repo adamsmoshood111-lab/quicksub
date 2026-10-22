@@ -1,221 +1,613 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1730">
+  <meta name="description" content="QuickSub makes data, airtime, electricity, cable TV and educational pins easier to access in Nigeria.">
+  <title>QuickSub | Digital Services Made Simple</title>
 
-    <title>QuickSub | Digital Services Made Simple</title>
+  <style>
+    :root {
+      --navy: #0b1730;
+      --blue: #2563eb;
+      --green: #16a34a;
+      --text: #172033;
+      --muted: #687386;
+      --background: #f5f7fb;
+      --white: #ffffff;
+      --border: #e7ebf2;
+    }
 
-    <meta name="description" content="QuickSub makes purchasing mobile data and digital services simple and convenient.">
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    html {
+      scroll-behavior: smooth;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f7fb;
-            color: #172033;
-            line-height: 1.6;
-        }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: var(--background);
+      line-height: 1.6;
+    }
 
-        header {
-            background: #ffffff;
-            padding: 18px 6%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #e8ebf2;
-        }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
 
-        .logo {
-            font-size: 25px;
-            font-weight: 800;
-            color: #155eef;
-        }
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
 
-        .logo span {
-            color: #16a673;
-        }
+    .container {
+      width: min(1120px, 92%);
+      margin: auto;
+    }
 
-        .account-button {
-            background: #155eef;
-            color: white;
-            padding: 10px 18px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 14px;
-        }
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
 
-        .hero {
-            padding: 65px 6% 50px;
-            text-align: center;
-            background: linear-gradient(135deg, #102a56, #155eef);
-            color: white;
-        }
+    .navbar {
+      min-height: 76px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
 
-        .hero h1 {
-            font-size: clamp(30px, 6vw, 48px);
-            line-height: 1.2;
-            margin-bottom: 18px;
-        }
+    .logo {
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: var(--navy);
+    }
 
-        .hero p {
-            max-width: 520px;
-            margin: 0 auto 25px;
-            color: #e3ebff;
-        }
+    .logo span {
+      color: var(--green);
+    }
 
-        .hero-button {
-            display: inline-block;
-            background: #ffffff;
-            color: #155eef;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 13px 24px;
-            border-radius: 8px;
-        }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 14px;
+      font-weight: 600;
+    }
 
-        main {
-            max-width: 1050px;
-            margin: auto;
-            padding: 45px 6%;
-        }
+    .nav-links a:hover {
+      color: var(--blue);
+    }
 
-        .section-heading {
-            text-align: center;
-            margin-bottom: 28px;
-        }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        .section-heading h2 {
-            font-size: 26px;
-            margin-bottom: 8px;
-        }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 17px;
+      border-radius: 9px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      font-size: 14px;
+      transition: 0.2s ease;
+    }
 
-        .section-heading p {
-            color: #687386;
-        }
+    .button-primary {
+      background: var(--blue);
+      color: var(--white);
+    }
 
-        .services {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
-            gap: 16px;
-        }
+    .button-primary:hover {
+      background: #1d4ed8;
+    }
 
-        .service-card {
-            background: white;
-            padding: 25px 12px;
-            text-align: center;
-            border-radius: 12px;
-            border: 1px solid #e8ebf2;
-        }
+    .button-outline {
+      background: var(--white);
+      border-color: var(--border);
+      color: var(--navy);
+    }
 
-        .service-icon {
-            font-size: 30px;
-            margin-bottom: 10px;
-        }
+    .hero {
+      padding: 76px 0 72px;
+      background:
+        radial-gradient(circle at 85% 15%, #2457a533, transparent 32%),
+        linear-gradient(135deg, #0b1730, #142c52);
+      color: var(--white);
+      overflow: hidden;
+    }
 
-        .service-card h3 {
-            font-size: 16px;
-        }
+    .hero-content {
+      max-width: 720px;
+    }
 
-        .service-card p {
-            font-size: 12px;
-            color: #687386;
-            margin-top: 5px;
-        }
+    .eyebrow {
+      display: inline-block;
+      padding: 7px 12px;
+      border: 1px solid #ffffff35;
+      border-radius: 30px;
+      color: #c9f7d7;
+      background: #ffffff0d;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
 
-        .notice {
-            margin-top: 30px;
-            background: white;
-            padding: 22px;
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid #e8ebf2;
-        }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 61px);
+      line-height: 1.12;
+      letter-spacing: -2px;
+      margin-bottom: 22px;
+    }
 
-        .notice p {
-            color: #687386;
-            font-size: 14px;
-        }
+    .hero h1 span {
+      color: #67e8a1;
+    }
 
-        footer {
-            text-align: center;
-            padding: 25px;
-            color: #687386;
-            font-size: 13px;
-        }
-    </style>
+    .hero p {
+      max-width: 590px;
+      color: #d0d9e8;
+      font-size: 17px;
+      margin-bottom: 29px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .hero .button-outline {
+      background: transparent;
+      border-color: #ffffff60;
+      color: var(--white);
+    }
+
+    .hero-note {
+      margin-top: 23px;
+      font-size: 12px;
+      color: #c4d0e3;
+    }
+
+    section {
+      padding: 65px 0;
+    }
+
+    .section-heading {
+      text-align: center;
+      max-width: 650px;
+      margin: 0 auto 35px;
+    }
+
+    .section-heading .label {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .section-heading h2 {
+      margin: 9px 0 12px;
+      font-size: clamp(27px, 4vw, 37px);
+      line-height: 1.2;
+      color: var(--navy);
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 19px;
+    }
+
+    .service-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 25px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px #1023440d;
+    }
+
+    .service-icon {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: #eff6ff;
+      font-size: 25px;
+      margin-bottom: 19px;
+    }
+
+    .service-card:nth-child(2) .service-icon,
+    .service-card:nth-child(5) .service-icon {
+      background: #ecfdf3;
+    }
+
+    .service-card h3 {
+      font-size: 19px;
+      margin-bottom: 8px;
+      color: var(--navy);
+    }
+
+    .service-card p {
+      font-size: 14px;
+      color: var(--muted);
+      min-height: 45px;
+      margin-bottom: 18px;
+    }
+
+    .service-link {
+      color: var(--blue);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .service-link span {
+      margin-left: 4px;
+    }
+
+    .how-section {
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 25px;
+    }
+
+    .step {
+      padding: 25px;
+      border-radius: 14px;
+      background: var(--background);
+    }
+
+    .step-number {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: var(--white);
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .step h3 {
+      margin-bottom: 8px;
+      color: var(--navy);
+      font-size: 17px;
+    }
+
+    .step p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .cta {
+      padding: 55px 25px;
+      border-radius: 20px;
+      background: linear-gradient(120deg, #0b1730, #1d4275);
+      color: var(--white);
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: clamp(26px, 4vw, 36px);
+      margin-bottom: 12px;
+    }
+
+    .cta p {
+      max-width: 570px;
+      margin: 0 auto 23px;
+      color: #d2deef;
+      font-size: 15px;
+    }
+
+    footer {
+      padding: 42px 0 20px;
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 30px;
+      padding-bottom: 30px;
+    }
+
+    .footer-brand {
+      max-width: 340px;
+    }
+
+    .footer-brand .logo {
+      color: var(--white);
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .footer-brand p,
+    .footer-links a {
+      color: #b9c6da;
+      font-size: 13px;
+    }
+
+    .footer-links h3 {
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .footer-links a {
+      display: block;
+      margin: 7px 0;
+    }
+
+    .footer-links a:hover {
+      color: var(--white);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #ffffff20;
+      padding-top: 18px;
+      color: #aab9d0;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 800px) {
+      .nav-links {
+        display: none;
+      }
+
+      .services-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 58px 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .navbar {
+        min-height: 68px;
+      }
+
+      .logo {
+        font-size: 24px;
+      }
+
+      .nav-actions {
+        gap: 7px;
+      }
+
+      .nav-actions .button {
+        padding: 9px 10px;
+        font-size: 12px;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 48px 0;
+      }
+
+      .service-card p {
+        min-height: 0;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <header>
+    <div class="container navbar">
+      <a class="logo" href="#" aria-label="QuickSub homepage">Quick<span>Sub</span></a>
 
-    <header>
-        <div class="logo">Quick<span>Sub</span></div>
-        <a class="account-button" href="#services">Get Started</a>
-    </header>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#services">Services</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#contact">Contact</a>
+      </nav>
 
+      <div class="nav-actions">
+        <a class="button button-outline" href="#account">Log In</a>
+        <a class="button button-primary" href="#account">Get Started</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
     <section class="hero">
-        <h1>Your Digital Services,<br>Made Simple.</h1>
+      <div class="container">
+        <div class="hero-content">
+          <div class="eyebrow">Your digital services platform</div>
 
-        <p>
-            A simpler way to access mobile data and digital services,
-            all in one convenient place.
-        </p>
+          <h1>Your Digital Services, <span>Made Simple.</span></h1>
 
-        <a class="hero-button" href="#services">Explore Services</a>
+          <p>
+            Access mobile data, airtime, electricity payments, cable TV
+            subscriptions and educational pins from one convenient platform.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="#services">Explore Services</a>
+            <a class="button button-outline" href="#account">Create an Account</a>
+          </div>
+
+          <div class="hero-note">
+            QuickSub is being built to make everyday digital services easier to access.
+          </div>
+        </div>
+      </div>
     </section>
 
-    <main id="services">
+    <section id="services">
+      <div class="container">
         <div class="section-heading">
-            <h2>Our Services</h2>
-            <p>Choose a service to get started.</p>
+          <div class="label">Our Services</div>
+          <h2>Everything You Need, In One Place</h2>
+          <p>
+            Choose a service to get started. Available products will depend
+            on supplier support and service activation.
+          </p>
         </div>
 
-        <div class="services">
+        <div class="services-grid">
+          <article class="service-card">
+            <div class="service-icon" aria-hidden="true">📱</div>
+            <h3>Data Bundles</h3>
+            <p>Explore supported mobile data plans and choose a bundle that suits your needs.</p>
+            <a class="service-link" href="#account">Explore Data <span>→</span></a>
+          </article>
 
-            <div class="service-card">
-                <div class="service-icon">📶</div>
-                <h3>Data Bundles</h3>
-                <p>Explore available data plans.</p>
-            </div>
+          <article class="service-card">
+            <div class="service-icon" aria-hidden="true">☎️</div>
+            <h3>Airtime</h3>
+            <p>Prepare to top up supported mobile networks with ease.</p>
+            <a class="service-link" href="#account">Explore Airtime <span>→</span></a>
+          </article>
 
-            <div class="service-card">
-                <div class="service-icon">📱</div>
-                <h3>Airtime</h3>
-                <p>Mobile airtime services.</p>
-            </div>
+          <article class="service-card">
+            <div class="service-icon" aria-hidden="true">⚡</div>
+            <h3>Electricity</h3>
+            <p>Access supported electricity payment services in one place.</p>
+            <a class="service-link" href="#account">Pay Electricity <span>→</span></a>
+          </article>
 
-            <div class="service-card">
-                <div class="service-icon">⚡</div>
-                <h3>Electricity</h3>
-                <p>Electricity payment services.</p>
-            </div>
+          <article class="service-card">
+            <div class="service-icon" aria-hidden="true">📺</div>
+            <h3>Cable TV</h3>
+            <p>Find supported TV subscription and renewal options.</p>
+            <a class="service-link" href="#account">Explore Cable TV <span>→</span></a>
+          </article>
 
-            <div class="service-card">
-                <div class="service-icon">📺</div>
-                <h3>Cable TV</h3>
-                <p>Television subscription services.</p>
-            </div>
+          <article class="service-card">
+            <div class="service-icon" aria-hidden="true">🎓</div>
+            <h3>Educational Pins</h3>
+            <p>Access available examination pins, subject to supported products.</p>
+            <a class="service-link" href="#account">Explore Pins <span>→</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
 
+    <section class="how-section" id="how-it-works">
+      <div class="container">
+        <div class="section-heading">
+          <div class="label">Simple Process</div>
+          <h2>How QuickSub Will Work</h2>
+          <p>A straightforward journey from choosing a service to checking your transaction status.</p>
         </div>
 
-        <div class="notice">
-            <h3>Welcome to QuickSub</h3>
-            <p>
-                We're building a convenient platform for digital services.
-                Service availability and purchases will be enabled as
-                development progresses.
-            </p>
+        <div class="steps-grid">
+          <article class="step">
+            <div class="step-number">1</div>
+            <h3>Choose a Service</h3>
+            <p>Select data, airtime, electricity, cable TV or educational pins.</p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">2</div>
+            <h3>Enter Your Details</h3>
+            <p>Provide the required number, account details or product selection.</p>
+          </article>
+
+          <article class="step">
+            <div class="step-number">3</div>
+            <h3>Confirm and Track</h3>
+            <p>Review your order and check its status once transactions are connected.</p>
+          </article>
         </div>
-    </main>
+      </div>
+    </section>
 
-    <footer>
-        &copy; 2026 QuickSub. All rights reserved.
-    </footer>
+    <section id="account">
+      <div class="container">
+        <div class="cta">
+          <h2>Your QuickSub Journey Starts Here</h2>
+          <p>
+            Customer accounts, secure payments and live purchases will be
+            connected as the platform is developed.
+          </p>
+          <a class="button button-primary" href="#services">Explore Our Services</a>
+        </div>
+      </div>
+    </section>
+  </main>
 
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a class="logo" href="#">Quick<span>Sub</span></a>
+          <p>
+            A Nigerian digital services platform in development,
+            designed to bring essential services together.
+          </p>
+        </div>
+
+        <div class="footer-links">
+          <h3>Explore</h3>
+          <a href="#services">Our Services</a>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#account">Customer Account</a>
+        </div>
+
+        <div class="footer-links">
+          <h3>Customer Support</h3>
+          <a href="#contact">Contact Us</a>
+          <a href="#contact">Report a Problem</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        &copy; <span id="year"></span> QuickSub. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
-</html>
+    </html>
