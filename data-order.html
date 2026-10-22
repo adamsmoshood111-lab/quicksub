@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101713">
+  <title>Review Data Order | QuickSub">
+
+  <style>
+    :root {
+      --background: #101713;
+      --surface: #19231d;
+      --green: #35d07f;
+      --text: #f5f7f5;
+      --muted: #a8b5ac;
+      --border: #2d3b32;
+      --warning: #f4c66a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      padding: 18px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--green);
+    }
+
+    .back-link {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    main {
+      width: min(100% - 36px, 600px);
+      margin: 40px auto;
+    }
+
+    .eyebrow {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: clamp(29px, 6vw, 40px);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      color: var(--muted);
+      margin-bottom: 26px;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+
+    .panel h2 {
+      font-size: 19px;
+      margin-bottom: 18px;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .detail-label {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .detail-value {
+      font-weight: bold;
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+
+    .price {
+      color: var(--green);
+      font-size: 22px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--background);
+      color: var(--text);
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--green);
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .notice {
+      padding: 15px;
+      background: #29251a;
+      border: 1px solid #554626;
+      color: var(--warning);
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 9px;
+      background: var(--green);
+      color: #092014;
+      font-size: 15px;
+      font-weight: bold;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .secondary-button {
+      display: block;
+      text-align: center;
+      color: var(--green);
+      margin-top: 17px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .message {
+      padding: 17px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .message strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 5px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    footer {
+      margin-top: 55px;
+      padding: 24px 15px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 16px 18px;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+
+      main {
+        margin-top: 30px;
+      }
+
+      .panel {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="logo" href="index.html">Quick<span>Sub</span></a>
+    <a class="back-link" id="backLink" href="data.html">← Back</a>
+  </header>
+
+  <main>
+    <p class="eyebrow">Order Review</p>
+    <h1>Review Your Order</h1>
+
+    <p class="intro">
+      Check your selected bundle and recipient details before proceeding.
+    </p>
+
+    <div id="loading" class="message">
+      Loading bundle details...
+    </div>
+
+    <div id="error" class="message hidden" role="alert">
+      <strong>Unable to load this bundle</strong>
+      The selected bundle could not be verified. Please return to the
+      catalogue and choose an available bundle.
+    </div>
+
+    <section id="orderSection" class="hidden">
+      <div class="panel">
+        <h2>Bundle Details</h2>
+
+        <div class="detail-row">
+          <span class="detail-label">Network</span>
+          <span class="detail-value" id="networkValue">—</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Category</span>
+          <span class="detail-value" id="categoryValue">—</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Bundle</span>
+          <span class="detail-value" id="nameValue">—</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="detail-label">Selling Price</span>
+          <span class="detail-value price" id="priceValue">—</span>
+        </div>
+      </div>
+
+      <form id="orderForm" class="panel">
+        <h2>Recipient Details</h2>
+
+        <label for="phone">Recipient's phone number</label>
+        <input
+          id="phone"
+          name="phone"
+          type="tel"
+          inputmode="tel"
+          autocomplete="tel"
+          placeholder="e.g. 08012345678"
+          minlength="7"
+          maxlength="20"
+          required
+        >
+
+        <p class="hint">
+          Carefully check the number before continuing.
+        </p>
+
+        <div style="height: 20px;"></div>
+
+        <div class="notice">
+          <strong>Purchase not yet enabled.</strong>
+          This page is for reviewing your selection only. No money will
+          be deducted and no data will be purchased.
+        </div>
+
+        <button class="button" type="submit">
+          Review Details
+        </button>
+
+        <a class="secondary-button" id="changeBundle" href="data.html">
+          ← Choose a Different Bundle
+        </a>
+      </form>
+    </section>
+
+    <div id="reviewResult" class="message hidden" aria-live="polite">
+      <strong>Details recorded for review</strong>
+      <p id="reviewText"></p>
+      <p style="margin-top: 12px;">
+        This is not a purchase confirmation. No transaction has been submitted.
+      </p>
+    </div>
+  </main>
+
+  <footer>
+    © <span id="year"></span> QuickSub. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    const allowedNetworks = ["MTN", "Airtel", "Glo", "9mobile"];
+    const params = new URLSearchParams(window.location.search);
+
+    const planId = params.get("plan") || "";
+    const requestedNetwork = params.get("network") || "";
+    const category = params.get("category") || "";
+
+    const network = allowedNetworks.find(
+      item => item.toLowerCase() === requestedNetwork.toLowerCase()
+    );
+
+    const loading = document.getElementById("loading");
+    const errorBox = document.getElementById("error");
+    const orderSection = document.getElementById("orderSection");
+    const reviewResult = document.getElementById("reviewResult");
+    const reviewText = document.getElementById("reviewText");
+    const orderForm = document.getElementById("orderForm");
+    const phoneInput = document.getElementById("phone");
+    const backLink = document.getElementById("backLink");
+    const changeBundle = document.getElementById("changeBundle");
+
+    let selectedPlan = null;
+
+    if (network && category) {
+      const categoryUrl =
+        "data-categories.html?network=" +
+        encodeURIComponent(network);
+
+      backLink.href = categoryUrl;
+      changeBundle.href =
+        "data-plans.html?network=" +
+        encodeURIComponent(network) +
+        "&category=" +
+        encodeURIComponent(category);
+    }
+
+    function formatNaira(minorUnits) {
+      if (!Number.isSafeInteger(minorUnits) || minorUnits <= 0) {
+        return null;
+      }
+
+      return new Intl.NumberFormat("en-NG", {
+        style: "currency",
+        currency: "NGN",
+        maximumFractionDigits: 2
+      }).format(minorUnits / 100);
+    }
+
+    function showError() {
+      loading.classList.add("hidden");
+      orderSection.classList.add("hidden");
+      errorBox.classList.remove("hidden");
+    }
+
+    async function loadSelectedPlan() {
+      if (!network || !category.trim() || !planId) {
+        showError();
+        return;
+      }
+
+      try {
+        const query = new URLSearchParams({
+          service: "data",
+          network: network,
+          category: category
+        });
+
+        const response = await fetch(
+          "/api/plans?" + query.toString(),
+          {
+            method: "GET",
+            headers: { "Accept": "application/json" },
+            cache: "no-store"
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Catalogue request failed.");
+        }
+
+        const result = await response.json();
+
+        if (!result.success || !Array.isArray(result.plans)) {
+          throw new Error("Unexpected catalogue response.");
+        }
+
+        selectedPlan = result.plans.find(plan =>
+          plan.id === planId &&
+          plan.service_type === "data" &&
+          typeof plan.network === "string" &&
+          plan.network.toLowerCase() === network.toLowerCase() &&
+          plan.category === category &&
+          typeof plan.name === "string" &&
+          Number.isSafeInteger(plan.selling_price_minor) &&
+          plan.selling_price_minor > 0
+        );
+
+        if (!selectedPlan) {
+          throw new Error("The selected bundle is unavailable.");
+        }
+
+        document.getElementById("networkValue").textContent =
+          selectedPlan.network;
+
+        document.getElementById("categoryValue").textContent =
+          selectedPlan.category;
+
+        document.getElementById("nameValue").textContent =
+          selectedPlan.name;
+
+        document.getElementById("priceValue").textContent =
+          formatNaira(selectedPlan.selling_price_minor);
+
+        loading.classList.add("hidden");
+        errorBox.classList.add("hidden");
+        orderSection.classList.remove("hidden");
+
+      } catch (error) {
+        showError();
+      }
+    }
+
+    orderForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      if (!selectedPlan) {
+        return;
+      }
+
+      const phone = phoneInput.value.trim();
+
+      if (!/^\+?[0-9\s()-]{7,20}$/.test(phone)) {
+        phoneInput.setCustomValidity(
+          "Enter a valid phone number using digits, spaces, +, - or parentheses."
+        );
+        phoneInput.reportValidity();
+        return;
+      }
+
+      phoneInput.setCustomValidity("");
+
+      reviewText.textContent =
+        "Network: " + selectedPlan.network +
+        " | Bundle: " + selectedPlan.name +
+        " | Recipient: " + phone +
+        " | Price: " +
+        formatNaira(selectedPlan.selling_price_minor);
+
+      reviewResult.classList.remove("hidden");
+      reviewResult.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+      });
+    });
+
+    phoneInput.addEventListener("input", function() {
+      phoneInput.setCustomValidity("");
+    });
+
+    loadSelectedPlan();
+  </script>
+</body>
+          </html>
