@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101713">
+  <title>Contact & Support | QuickSub</title>
+
+  <style>
+    :root {
+      --background: #101713;
+      --surface: #19231d;
+      --green: #35d07f;
+      --text: #f5f7f5;
+      --muted: #a8b5ac;
+      --border: #2d3b32;
+      --warning: #f4c66a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      padding: 18px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--green);
+    }
+
+    .back-link {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    main {
+      width: min(100% - 36px, 760px);
+      margin: 40px auto;
+    }
+
+    .eyebrow {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: clamp(30px, 6vw, 42px);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 25px;
+    }
+
+    .support-card,
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 22px;
+    }
+
+    .support-card h2 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .support-card p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .support-link {
+      display: inline-block;
+      color: var(--green);
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .panel h2 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .panel-intro {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 22px;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--background);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--green);
+    }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 7px;
+    }
+
+    .notice {
+      padding: 14px;
+      background: #29251a;
+      border: 1px solid #554626;
+      color: var(--warning);
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 9px;
+      background: var(--green);
+      color: #092014;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .message {
+      margin-top: 18px;
+      padding: 15px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--muted);
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    footer {
+      margin-top: 55px;
+      padding: 24px 15px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 560px) {
+      header {
+        padding: 16px 18px;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+
+      main {
+        margin-top: 30px;
+      }
+
+      .support-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .panel,
+      .support-card {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="logo" href="index.html">Quick<span>Sub</span></a>
+    <a class="back-link" href="dashboard.html">← Dashboard</a>
+  </header>
+
+  <main>
+    <p class="eyebrow">We're Here to Help</p>
+    <h1>Contact & Support</h1>
+
+    <p class="intro">
+      Have a question about QuickSub or need help with a transaction?
+      Find the appropriate support option below.
+    </p>
+
+    <section class="support-grid">
+      <div class="support-card">
+        <h2>WhatsApp Support</h2>
+        <p>
+          Get help with account questions, service enquiries,
+          and transaction problems.
+        </p>
+        <span class="support-link">Contact details coming soon</span>
+      </div>
+
+      <div class="support-card">
+        <h2>Email Support</h2>
+        <p>
+          Send us a detailed enquiry or explain a problem
+          with a previous transaction.
+        </p>
+        <span class="support-link">Email address coming soon</span>
+      </div>
+    </section>
+
+    <form id="supportForm" class="panel">
+      <h2>Send a Support Request</h2>
+      <p class="panel-intro">
+        Complete the form below to prepare your enquiry.
+      </p>
+
+      <div class="notice">
+        <strong>Support submission is not connected yet.</strong>
+        This draft form does not send or save your message. We will
+        connect it to the backend before accepting real support requests.
+      </div>
+
+      <div class="field">
+        <label for="name">Full Name</label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          maxlength="100"
+          autocomplete="name"
+          placeholder="Enter your full name"
+          required
+        >
+      </div>
+
+      <div class="field">
+        <label for="email">Email Address</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          maxlength="254"
+          autocomplete="email"
+          placeholder="Enter your email address"
+          required
+        >
+      </div>
+
+      <div class="field">
+        <label for="issue">What do you need help with?</label>
+        <select id="issue" name="issue" required>
+          <option value="">Select an issue</option>
+          <option value="account">Account or Login</option>
+          <option value="funding">Wallet Funding</option>
+          <option value="data">Data or Airtime Purchase</option>
+          <option value="electricity">Electricity Bill</option>
+          <option value="cable_tv">Cable TV Subscription</option>
+          <option value="educational_pins">Educational Pins</option>
+          <option value="transaction">Transaction Problem</option>
+          <option value="other">Other Enquiry</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="reference">
+          Transaction Reference (Optional)
+        </label>
+        <input
+          id="reference"
+          name="reference"
+          type="text"
+          maxlength="100"
+          autocomplete="off"
+          placeholder="Enter your transaction reference"
+        >
+        <p class="hint">
+          If your request concerns a transaction, include its reference
+          to help support investigate it.
+        </p>
+      </div>
+
+      <div class="field">
+        <label for="message">Describe Your Enquiry</label>
+        <textarea
+          id="message"
+          name="message"
+          maxlength="3000"
+          placeholder="Explain how we can help..."
+          required
+        ></textarea>
+        <p class="hint">
+          Never include your password, login token, or transaction PIN.
+        </p>
+      </div>
+
+      <button class="button" type="submit">
+        Review Support Request
+      </button>
+
+      <div id="draft" class="message hidden" aria-live="polite"></div>
+    </form>
+  </main>
+
+  <footer>
+    © <span id="year"></span> QuickSub. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    const form = document.getElementById("supportForm");
+    const draft = document.getElementById("draft");
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const issue = document.getElementById("issue");
+      const reference = document.getElementById("reference").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      if (!name || !email || !issue.value || !message) {
+        form.reportValidity();
+        return;
+      }
+
+      const issueName =
+        issue.options[issue.selectedIndex].text;
+
+      // Show a local preview only. Nothing is sent or stored.
+      draft.textContent =
+        "Draft preview only — your request has NOT been sent. " +
+        "Name: " + name +
+        " | Email: " + email +
+        " | Issue: " + issueName +
+        " | Reference: " + (reference || "Not provided") +
+        " | Message: " + message;
+
+      draft.classList.remove("hidden");
+      draft.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+      });
+    });
+  </script>
+</body>
+        </html>
