@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101713">
+  <title>Electricity Bills | QuickSub</title>
+
+  <style>
+    :root {
+      --background: #101713;
+      --surface: #19231d;
+      --green: #35d07f;
+      --text: #f5f7f5;
+      --muted: #a8b5ac;
+      --border: #2d3b32;
+      --warning: #f4c66a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      padding: 18px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--green);
+    }
+
+    .back-link {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    main {
+      width: min(100% - 36px, 650px);
+      margin: 40px auto;
+    }
+
+    .eyebrow {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: clamp(30px, 6vw, 42px);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+
+    .panel h2 {
+      font-size: 19px;
+      margin-bottom: 20px;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    select,
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--background);
+      color: var(--text);
+      font-size: 16px;
+      outline: none;
+    }
+
+    select:focus,
+    input:focus {
+      border-color: var(--green);
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 7px;
+    }
+
+    .notice {
+      padding: 15px;
+      background: #29251a;
+      border: 1px solid #554626;
+      color: var(--warning);
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 9px;
+      background: var(--green);
+      color: #092014;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .secondary-link {
+      display: block;
+      color: var(--green);
+      text-align: center;
+      margin-top: 17px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .message {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 20px;
+    }
+
+    .message strong {
+      display: block;
+      margin-bottom: 7px;
+    }
+
+    .message p {
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    footer {
+      margin-top: 55px;
+      padding: 24px 15px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 16px 18px;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+
+      main {
+        margin-top: 30px;
+      }
+
+      .panel {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="logo" href="index.html">Quick<span>Sub</span></a>
+    <a class="back-link" href="index.html">← Home</a>
+  </header>
+
+  <main>
+    <p class="eyebrow">Power Your Home</p>
+    <h1>Electricity Bills</h1>
+
+    <p class="intro">
+      Enter your electricity details and review your payment information
+      before proceeding.
+    </p>
+
+    <form id="electricityForm" class="panel">
+      <h2>Meter Details</h2>
+
+      <div class="field">
+        <label for="disco">Electricity Distribution Company</label>
+        <select id="disco" name="disco" required>
+          <option value="">Select a distribution company</option>
+          <option value="AEDC">Abuja Electricity Distribution Company (AEDC)</option>
+          <option value="BEDC">Benin Electricity Distribution Company (BEDC)</option>
+          <option value="EEDC">Enugu Electricity Distribution Company (EEDC)</option>
+          <option value="EKEDC">Eko Electricity Distribution Company (EKEDC)</option>
+          <option value="IBEDC">Ibadan Electricity Distribution Company (IBEDC)</option>
+          <option value="IKEDC">Ikeja Electric (IKEDC)</option>
+          <option value="JED">Jos Electricity Distribution Company (JED)</option>
+          <option value="KAEDCO">Kaduna Electricity Distribution Company (KAEDCO)</option>
+          <option value="KEDCO">Kano Electricity Distribution Company (KEDCO)</option>
+          <option value="KEDC">Kebbi Electricity Distribution Company (KEDC)</option>
+          <option value="PHED">Port Harcourt Electricity Distribution Company (PHED)</option>
+          <option value="YEDC">Yola Electricity Distribution Company (YEDC)</option>
+        </select>
+        <p class="hint">
+          Only select a company supported by QuickSub's supplier when
+          purchases are enabled.
+        </p>
+      </div>
+
+      <div class="field">
+        <label for="meterType">Meter Type</label>
+        <select id="meterType" name="meterType" required>
+          <option value="">Select meter type</option>
+          <option value="prepaid">Prepaid</option>
+          <option value="postpaid">Postpaid</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="meterNumber">Meter Number</label>
+        <input
+          id="meterNumber"
+          name="meterNumber"
+          type="text"
+          inputmode="numeric"
+          autocomplete="off"
+          minlength="6"
+          maxlength="30"
+          placeholder="Enter your meter number"
+          required
+        >
+        <p class="hint">
+          Check the meter number on your meter or previous electricity bill.
+        </p>
+      </div>
+
+      <div class="field">
+        <label for="amount">Payment Amount (₦)</label>
+        <input
+          id="amount"
+          name="amount"
+          type="number"
+          inputmode="numeric"
+          min="100"
+          max="500000"
+          step="1"
+          placeholder="Enter amount"
+          required
+        >
+        <p class="hint">
+          Enter an amount between ₦100 and ₦500,000. Supplier limits
+          will be confirmed before purchases are enabled.
+        </p>
+      </div>
+
+      <div class="notice">
+        <strong>Payments are not enabled yet.</strong>
+        This page does not verify meter ownership, generate electricity
+        tokens, submit a payment, or deduct money from your wallet.
+      </div>
+
+      <button class="button" type="submit">Review Payment Details</button>
+
+      <a class="secondary-link" href="dashboard.html">
+        Return to Dashboard
+      </a>
+    </form>
+
+    <section id="review" class="message hidden" aria-live="polite">
+      <strong>Review Your Electricity Details</strong>
+      <p id="reviewDetails"></p>
+      <p style="margin-top: 10px;">
+        This is a review only. No payment or electricity purchase has
+        been submitted.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> QuickSub. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    const form = document.getElementById("electricityForm");
+    const discoInput = document.getElementById("disco");
+    const meterTypeInput = document.getElementById("meterType");
+    const meterNumberInput = document.getElementById("meterNumber");
+    const amountInput = document.getElementById("amount");
+    const review = document.getElementById("review");
+    const reviewDetails = document.getElementById("reviewDetails");
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const disco = discoInput.value;
+      const meterType = meterTypeInput.value;
+      const meterNumber = meterNumberInput.value.trim();
+      const amount = Number(amountInput.value);
+
+      if (!disco || !meterType) {
+        form.reportValidity();
+        return;
+      }
+
+      if (!/^[A-Za-z0-9-]{6,30}$/.test(meterNumber)) {
+        meterNumberInput.setCustomValidity(
+          "Enter a meter number containing 6 to 30 letters, numbers, or hyphens."
+        );
+        meterNumberInput.reportValidity();
+        return;
+      }
+
+      meterNumberInput.setCustomValidity("");
+
+      if (
+        !Number.isSafeInteger(amount) ||
+        amount < 100 ||
+        amount > 500000
+      ) {
+        amountInput.setCustomValidity(
+          "Enter an amount between ₦100 and ₦500,000."
+        );
+        amountInput.reportValidity();
+        return;
+      }
+
+      amountInput.setCustomValidity("");
+
+      const discoName =
+        discoInput.options[discoInput.selectedIndex].text;
+
+      reviewDetails.textContent =
+        "Distribution Company: " + discoName +
+        " | Meter Type: " + meterType.toUpperCase() +
+        " | Meter Number: " + meterNumber +
+        " | Payment Amount: " +
+        new Intl.NumberFormat("en-NG", {
+          style: "currency",
+          currency: "NGN",
+          maximumFractionDigits: 0
+        }).format(amount);
+
+      review.classList.remove("hidden");
+      review.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+      });
+    });
+
+    meterNumberInput.addEventListener("input", () => {
+      meterNumberInput.setCustomValidity("");
+    });
+
+    amountInput.addEventListener("input", () => {
+      amountInput.setCustomValidity("");
+    });
+  </script>
+</body>
+  </html>
