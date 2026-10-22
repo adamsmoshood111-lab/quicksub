@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1220">
+  <title>Transaction History | QuickSub">
+
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #111c2e;
+      --text: #f8fafc;
+      --muted: #9caec4;
+      --green: #4ade80;
+      --border: #293950;
+      --danger: #f87171;
+      --yellow: #fbbf24;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, select {
+      font: inherit;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      padding: 16px 5%;
+      background: #0e1828;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      font-size: 26px;
+      font-weight: 800;
+    }
+
+    .brand span {
+      color: var(--green);
+    }
+
+    .nav-link {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: auto;
+      padding: 32px 20px 50px;
+    }
+
+    .page-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 11px 16px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .button:hover {
+      border-color: var(--green);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 18px;
+      margin-bottom: 20px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .filters label {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 7px;
+    }
+
+    .filter-field {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    select {
+      width: 100%;
+      padding: 11px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    th {
+      color: var(--muted);
+      font-weight: 600;
+      background: #142034;
+      white-space: nowrap;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .service {
+      font-weight: 700;
+      text-transform: capitalize;
+    }
+
+    .recipient, .reference {
+      overflow-wrap: anywhere;
+      max-width: 180px;
+    }
+
+    .amount {
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 6px 9px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: capitalize;
+      white-space: nowrap;
+    }
+
+    .status.successful {
+      color: #bbf7d0;
+      background: #14532d;
+    }
+
+    .status.pending {
+      color: #fde68a;
+      background: #713f12;
+    }
+
+    .status.failed, .status.reversed {
+      color: #fecaca;
+      background: #7f1d1d;
+    }
+
+    .state {
+      padding: 35px 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .state.error {
+      color: #fecaca;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    #pageInfo {
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .pagination button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .support-note {
+      margin-top: 25px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--card);
+    }
+
+    .support-note h2 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .support-note p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    footer {
+      padding: 22px 15px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      text-align: center;
+      font-size: 12px;
+    }
+
+    @media (max-width: 500px) {
+      .navbar {
+        padding: 15px 18px;
+      }
+
+      .brand {
+        font-size: 23px;
+      }
+
+      .container {
+        padding: 25px 14px 35px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .page-heading .button {
+        width: 100%;
+        text-align: center;
+      }
+
+      .filters {
+        padding: 14px;
+      }
+
+      .filter-field {
+        min-width: 100%;
+      }
+
+      .pagination {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="navbar">
+    <a class="brand" href="index.html">Quick<span>Sub</span></a>
+    <a class="nav-link" href="dashboard.html">← Back to Dashboard</a>
+  </header>
+
+  <main class="container">
+    <div class="page-heading">
+      <div>
+        <h1>Transaction History</h1>
+        <p class="subtitle">
+          Review your purchases and check their latest recorded status.
+        </p>
+      </div>
+
+      <button class="button" id="refreshButton" type="button">
+        Refresh History
+      </button>
+    </div>
+
+    <section class="filters" aria-label="Transaction filters">
+      <div class="filter-field">
+        <label for="serviceFilter">Service</label>
+        <select id="serviceFilter">
+          <option value="">All services</option>
+          <option value="data">Data</option>
+          <option value="airtime">Airtime</option>
+          <option value="electricity">Electricity</option>
+          <option value="cable_tv">Cable TV</option>
+          <option value="educational_pins">Educational Pins</option>
+        </select>
+      </div>
+
+      <div class="filter-field">
+        <label for="statusFilter">Status</label>
+        <select id="statusFilter">
+          <option value="">All statuses</option>
+          <option value="pending">Pending</option>
+          <option value="successful">Successful</option>
+          <option value="failed">Failed</option>
+          <option value="reversed">Reversed</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="table-wrap">
+      <div id="loadingState" class="state" aria-live="polite">
+        Loading your transactions...
+      </div>
+
+      <table id="transactionTable" hidden>
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Recipient</th>
+            <th>Amount</th>
+            <th>Reference</th>
+            <th>Date</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="transactionBody"></tbody>
+      </table>
+    </section>
+
+    <div class="pagination">
+      <button class="button" id="previousButton" type="button" disabled>
+        ← Previous
+      </button>
+
+      <div id="pageInfo" aria-live="polite">Page 1</div>
+
+      <button class="button" id="nextButton" type="button" disabled>
+        Next →
+      </button>
+    </div>
+
+    <section class="support-note">
+      <h2>Need help with a transaction?</h2>
+      <p>
+        Keep your transaction reference and contact support if a purchase
+        appears incorrect. A pending transaction is not confirmation of
+        success or failure. Check its status before attempting another purchase.
+      </p>
+      <br>
+      <a class="button" href="contact.html">Contact Support</a>
+    </section>
+  </main>
+
+  <footer>
+    &copy; <span id="year"></span> QuickSub. All rights reserved.
+  </footer>
+
+  <script>
+    const loadingState = document.getElementById("loadingState");
+    const transactionTable = document.getElementById("transactionTable");
+    const transactionBody = document.getElementById("transactionBody");
+    const serviceFilter = document.getElementById("serviceFilter");
+    const statusFilter = document.getElementById("statusFilter");
+    const previousButton = document.getElementById("previousButton");
+    const nextButton = document.getElementById("nextButton");
+    const pageInfo = document.getElementById("pageInfo");
+    const refreshButton = document.getElementById("refreshButton");
+
+    let currentPage = 1;
+    let hasNextPage = false;
+    let loading = false;
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    function formatNaira(minorUnits) {
+      const amount = Number(minorUnits);
+
+      if (!Number.isSafeInteger(amount) || amount < 0) {
+        return "Unavailable";
+      }
+
+      return new Intl.NumberFormat("en-NG", {
+        style: "currency",
+        currency: "NGN",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(amount / 100);
+    }
+
+    function formatDate(value) {
+      if (typeof value !== "string" || !value.trim()) {
+        return "Unavailable";
+      }
+
+      const date = new Date(value);
+
+      if (Number.isNaN(date.getTime())) {
+        return value;
+      }
+
+      return new Intl.DateTimeFormat("en-NG", {
+        dateStyle: "medium",
+        timeStyle: "short"
+      }).format(date);
+    }
+
+    function makeCell(value, className = "") {
+      const cell = document.createElement("td");
+      cell.textContent = value;
+      if (className) cell.className = className;
+      return cell;
+    }
+
+    function showState(text, isError = false) {
+      transactionTable.hidden = true;
+      loadingState.hidden = false;
+      loadingState.textContent = text;
+      loadingState.className = isError ? "state error" : "state";
+    }
+
+    async function loadTransactions() {
+      if (loading) return;
+
+      loading = true;
+      refreshButton.disabled = true;
+      previousButton.disabled = true;
+      nextButton.disabled = true;
+
+      showState("Loading your transactions...");
+
+      const params = new URLSearchParams({
+        page: String(currentPage),
+        limit: "20"
+      });
+
+      try {
+        const response = await fetch(
+          "/api/transactions?" + params.toString(),
+          {
+            method: "GET",
+            credentials: "same-origin",
+            cache: "no-store"
+          }
+        );
+
+        if (response.status === 401 || response.status === 403) {
+          window.location.replace("login.html");
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error("Unable to retrieve transaction history.");
+        }
+
+        const result = await response.json();
+
+        if (!result.success || !Array.isArray(result.transactions)) {
+          throw new Error("The server returned an unexpected response.");
+        }
+
+        const allowedStatuses = [
+          "pending",
+          "successful",
+          "failed",
+          "reversed"
+        ];
+
+        const service = serviceFilter.value;
+        const status = statusFilter.value;
+
+        const filtered = result.transactions.filter((transaction) => {
+          const matchesService =
+            !service || transaction.service_type === service;
+
+          const matchesStatus =
+            !status || transaction.status === status;
+
+          return matchesService && matchesStatus;
+        });
+
+        transactionBody.replaceChildren();
+
+        if (filtered.length === 0) {
+          showState(
+            result.transactions.length === 0
+              ? "You don't have any transactions on this page yet."
+              : "No transactions on this page match your selected filters."
+          );
+        } else {
+          for (const transaction of filtered) {
+            const row = document.createElement("tr");
+
+            const serviceName =
+              typeof transaction.service_type === "string"
+                ? transaction.service_type.replaceAll("_", " ")
+                : "Service";
+
+            row.appendChild(makeCell(serviceName, "service"));
+            row.appendChild(
+              makeCell(
+                typeof transaction.recipient === "string"
+                  ? transaction.recipient
+                  : "Unavailable",
+                "recipient"
+              )
+            );
+            row.appendChild(
+              makeCell(
+                formatNaira(transaction.amount_minor),
+                "amount"
+              )
+            );
+            row.appendChild(
+              makeCell(
+                typeof transaction.reference === "string"
+                  ? transaction.reference
+                  : "Unavailable",
+                "reference"
+              )
+            );
+            row.appendChild(
+              makeCell(formatDate(transaction.created_at))
+            );
+
+            const statusCell = document.createElement("td");
+            const badge = document.createElement("span");
+
+            const transactionStatus =
+              typeof transaction.status === "string" &&
+              allowedStatuses.includes(transaction.status)
+                ? transaction.status
+                : "pending";
+
+            badge.className = "status " + transactionStatus;
+            badge.textContent = transactionStatus;
+
+            statusCell.appendChild(badge);
+            row.appendChild(statusCell);
+            transactionBody.appendChild(row);
+          }
+
+          loadingState.hidden = true;
+          transactionTable.hidden = false;
+        }
+
+        // The current endpoint returns up to the requested limit but
+        // does not yet provide a total count. Use a full page as a
+        // cautious indication that another page may exist.
+        hasNextPage = result.transactions.length === 20;
+
+        previousButton.disabled = currentPage <= 1;
+        nextButton.disabled = !hasNextPage;
+        pageInfo.textContent = "Page " + currentPage;
+      } catch (error) {
+        showState(
+          "We couldn't load your transaction history. Please try again.",
+          true
+        );
+      } finally {
+        loading = false;
+        refreshButton.disabled = false;
+      }
+    }
+
+    refreshButton.addEventListener("click", loadTransactions);
+
+    previousButton.addEventListener("click", () => {
+      if (currentPage > 1 && !loading) {
+        currentPage--;
+        loadTransactions();
+      }
+    });
+
+    nextButton.addEventListener("click", () => {
+      if (hasNextPage && !loading) {
+        currentPage++;
+        loadTransactions();
+      }
+    });
+
+    serviceFilter.addEventListener("change", () => {
+      currentPage = 1;
+      loadTransactions();
+    });
+
+    statusFilter.addEventListener("change", () => {
+      currentPage = 1;
+      loadTransactions();
+    });
+
+    loadTransactions();
+  </script>
+</body>
+  </html>
