@@ -115,21 +115,21 @@ if (
 const passwordHash = await createPasswordHash(password);
 
 // Recheck the token within a database batch before applying changes.
-const currentReset = await env.DB.prepare(
-  `SELECT id
-   FROM password_reset_tokens
+const claimResult = await env.DB.prepare(
+  `UPDATE password_reset_tokens
+   SET used_at = CURRENT_TIMESTAMP
    WHERE id = ?
      AND token_hash = ?
      AND used_at IS NULL
      AND expires_at > ?
-   LIMIT 1`
+   RETURNING id, customer_id`
 ).bind(
   reset.id,
   tokenHash,
   new Date().toISOString()
 ).first();
 
-if (!currentReset) {
+if (!claimResult) {
   return json({
     success: false,
     message: "This reset link is invalid or has expired."
