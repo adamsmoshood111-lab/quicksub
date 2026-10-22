@@ -49,6 +49,13 @@ return customer || null;
 }
 
 function validateNumber(body) {
+  if (
+  !body ||
+  typeof body !== "object" ||
+  Array.isArray(body)
+) {
+  return { error: "Invalid request data." };
+  }
 const label =
 typeof body.label === "string" ? body.label.trim() : "";
 
