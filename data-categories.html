@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101713">
+  <title>Data Categories | QuickSub">
+
+  <style>
+    :root {
+      --background: #101713;
+      --surface: #19231d;
+      --green: #35d07f;
+      --text: #f5f7f5;
+      --muted: #a8b5ac;
+      --border: #2d3b32;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      padding: 18px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--green);
+    }
+
+    .back-link {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    main {
+      width: min(100% - 36px, 850px);
+      margin: 42px auto;
+    }
+
+    .eyebrow {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: clamp(29px, 6vw, 42px);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .category-list {
+      display: grid;
+      gap: 15px;
+    }
+
+    .category-card {
+      display: block;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 21px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .category-card:hover {
+      border-color: var(--green);
+      transform: translateY(-2px);
+    }
+
+    .category-card h2 {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+
+    .category-card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .select-link {
+      display: inline-block;
+      color: var(--green);
+      font-weight: bold;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    .message {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      color: var(--muted);
+    }
+
+    .message strong {
+      color: var(--text);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    footer {
+      margin-top: 60px;
+      padding: 24px 15px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 16px 18px;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+
+      main {
+        margin-top: 32px;
+      }
+
+      .category-card {
+        padding: 17px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="logo" href="index.html">Quick<span>Sub</span></a>
+    <a class="back-link" href="data.html">← Networks</a>
+  </header>
+
+  <main>
+    <p class="eyebrow">Data Bundles</p>
+    <h1 id="pageTitle">Choose a Category</h1>
+
+    <p class="intro" id="intro">
+      Choose a data category to view its available bundles.
+    </p>
+
+    <div id="loading" class="message">
+      Loading available categories...
+    </div>
+
+    <div id="error" class="message hidden" role="alert">
+      <strong>Unable to load categories</strong>
+      Please try again later.
+    </div>
+
+    <div id="invalidNetwork" class="message hidden">
+      <strong>Network not recognised</strong>
+      Please return to the network selection page.
+      <p><a class="select-link" href="data.html">Choose a network →</a></p>
+    </div>
+
+    <div id="empty" class="message hidden">
+      <strong>No categories available yet</strong>
+      There are currently no active data plans configured for this network.
+      Please check again later.
+    </div>
+
+    <section
+      id="categoryList"
+      class="category-list hidden"
+      aria-label="Available data categories">
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> QuickSub. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    const allowedNetworks = ["MTN", "Airtel", "Glo", "9mobile"];
+
+    const params = new URLSearchParams(window.location.search);
+    const requestedNetwork = params.get("network") || "";
+
+    const network = allowedNetworks.find(
+      item => item.toLowerCase() === requestedNetwork.toLowerCase()
+    );
+
+    const pageTitle = document.getElementById("pageTitle");
+    const intro = document.getElementById("intro");
+    const loading = document.getElementById("loading");
+    const errorBox = document.getElementById("error");
+    const invalidNetwork = document.getElementById("invalidNetwork");
+    const empty = document.getElementById("empty");
+    const categoryList = document.getElementById("categoryList");
+
+    function hideAllMessages() {
+      loading.classList.add("hidden");
+      errorBox.classList.add("hidden");
+      invalidNetwork.classList.add("hidden");
+      empty.classList.add("hidden");
+      categoryList.classList.add("hidden");
+    }
+
+    function showInvalidNetwork() {
+      hideAllMessages();
+      invalidNetwork.classList.remove("hidden");
+    }
+
+    async function loadCategories() {
+      if (!network) {
+        pageTitle.textContent = "Choose a Network";
+        intro.textContent =
+          "Select a recognised mobile network to continue.";
+        showInvalidNetwork();
+        return;
+      }
+
+      pageTitle.textContent = network + " Data Categories";
+      intro.textContent =
+        "Choose an available " + network +
+        " data category to explore its bundles.";
+
+      try {
+        const response = await fetch(
+          "/api/plans?service=data&network=" +
+          encodeURIComponent(network),
+          {
+            method: "GET",
+            headers: { "Accept": "application/json" },
+            cache: "no-store"
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Could not load the catalogue.");
+        }
+
+        const result = await response.json();
+
+        if (!result.success || !Array.isArray(result.plans)) {
+          throw new Error("Unexpected catalogue response.");
+        }
+
+        const categories = new Map();
+
+        result.plans.forEach(plan => {
+          if (
+            typeof plan.network !== "string" ||
+            plan.network.toLowerCase() !== network.toLowerCase() ||
+            typeof plan.category !== "string" ||
+            !plan.category.trim()
+          ) {
+            return;
+          }
+
+          const key = plan.category.trim();
+
+          if (!categories.has(key)) {
+            categories.set(key, 0);
+          }
+
+          categories.set(key, categories.get(key) + 1);
+        });
+
+        hideAllMessages();
+
+        if (categories.size === 0) {
+          empty.classList.remove("hidden");
+          return;
+        }
+
+        categories.forEach((count, category) => {
+          const card = document.createElement("a");
+          card.className = "category-card";
+
+          const heading = document.createElement("h2");
+          heading.textContent = category;
+
+          const description = document.createElement("p");
+          description.textContent =
+            count + (count === 1
+              ? " available bundle"
+              : " available bundles");
+
+          const linkText = document.createElement("span");
+          linkText.className = "select-link";
+          linkText.textContent = "View Bundles →";
+
+          card.href =
+            "data-plans.html?network=" +
+            encodeURIComponent(network) +
+            "&category=" +
+            encodeURIComponent(category);
+
+          card.appendChild(heading);
+          card.appendChild(description);
+          card.appendChild(linkText);
+
+          categoryList.appendChild(card);
+        });
+
+        categoryList.classList.remove("hidden");
+
+      } catch (error) {
+        hideAllMessages();
+        errorBox.classList.remove("hidden");
+      }
+    }
+
+    loadCategories();
+  </script>
+</body>
+      </html>
