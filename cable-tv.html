@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101713">
+  <title>Cable TV Subscriptions | QuickSub</title>
+
+  <style>
+    :root {
+      --background: #101713;
+      --surface: #19231d;
+      --green: #35d07f;
+      --text: #f5f7f5;
+      --muted: #a8b5ac;
+      --border: #2d3b32;
+      --warning: #f4c66a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      padding: 18px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--green);
+    }
+
+    .back-link {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    main {
+      width: min(100% - 36px, 650px);
+      margin: 40px auto;
+    }
+
+    .eyebrow {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: clamp(30px, 6vw, 42px);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+
+    .panel h2 {
+      font-size: 19px;
+      margin-bottom: 20px;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    select,
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--background);
+      color: var(--text);
+      font-size: 16px;
+      outline: none;
+    }
+
+    select:focus,
+    input:focus {
+      border-color: var(--green);
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 7px;
+    }
+
+    .notice {
+      padding: 15px;
+      background: #29251a;
+      border: 1px solid #554626;
+      color: var(--warning);
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 9px;
+      background: var(--green);
+      color: #092014;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .secondary-link {
+      display: block;
+      color: var(--green);
+      text-align: center;
+      margin-top: 17px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .message {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 20px;
+    }
+
+    .message strong {
+      display: block;
+      margin-bottom: 7px;
+    }
+
+    .message p {
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    footer {
+      margin-top: 55px;
+      padding: 24px 15px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 16px 18px;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+
+      main {
+        margin-top: 30px;
+      }
+
+      .panel {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="logo" href="index.html">Quick<span>Sub</span></a>
+    <a class="back-link" href="index.html">← Home</a>
+  </header>
+
+  <main>
+    <p class="eyebrow">Entertainment Made Easy</p>
+    <h1>Cable TV Subscription</h1>
+
+    <p class="intro">
+      Select your television provider, enter your decoder details,
+      and review your subscription information.
+    </p>
+
+    <form id="cableForm" class="panel">
+      <h2>Subscription Details</h2>
+
+      <div class="field">
+        <label for="provider">TV Provider</label>
+        <select id="provider" name="provider" required>
+          <option value="">Select a TV provider</option>
+          <option value="DStv">DStv</option>
+          <option value="GOtv">GOtv</option>
+          <option value="StarTimes">StarTimes</option>
+        </select>
+        <p class="hint">
+          Available providers and packages will be confirmed before
+          real subscriptions are enabled.
+        </p>
+      </div>
+
+      <div class="field">
+        <label for="smartcard">Smartcard / IUC Number</label>
+        <input
+          id="smartcard"
+          name="smartcard"
+          type="text"
+          inputmode="numeric"
+          autocomplete="off"
+          minlength="6"
+          maxlength="30"
+          placeholder="Enter decoder number"
+          required
+        >
+        <p class="hint">
+          Check the number on your decoder or subscription account.
+        </p>
+      </div>
+
+      <div class="field">
+        <label for="package">Subscription Package</label>
+        <select id="package" name="package" required disabled>
+          <option value="">Select a provider first</option>
+        </select>
+        <p class="hint" id="packageHint">
+          Package names and prices have not yet been connected to
+          the supplier catalogue.
+        </p>
+      </div>
+
+      <div class="notice">
+        <strong>Subscriptions are not enabled yet.</strong>
+        This page does not verify decoder details, renew a subscription,
+        or deduct money from your wallet.
+      </div>
+
+      <button class="button" type="submit">Review Subscription</button>
+
+      <a class="secondary-link" href="dashboard.html">
+        Return to Dashboard
+      </a>
+    </form>
+
+    <section id="review" class="message hidden" aria-live="polite">
+      <strong>Review Your Subscription</strong>
+      <p id="reviewDetails"></p>
+      <p style="margin-top: 10px;">
+        This is a review only. No subscription or payment has been submitted.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> QuickSub. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    const form = document.getElementById("cableForm");
+    const providerInput = document.getElementById("provider");
+    const smartcardInput = document.getElementById("smartcard");
+    const packageInput = document.getElementById("package");
+    const packageHint = document.getElementById("packageHint");
+    const review = document.getElementById("review");
+    const reviewDetails = document.getElementById("reviewDetails");
+
+    // Real packages and prices will be loaded from the backend later.
+    // No package or price is invented here.
+    providerInput.addEventListener("change", () => {
+      packageInput.innerHTML = "";
+
+      const option = document.createElement("option");
+      option.value = "";
+      option.textContent = providerInput.value
+        ? "Packages are not available yet"
+        : "Select a provider first";
+
+      packageInput.appendChild(option);
+      packageInput.disabled = true;
+
+      packageHint.textContent = providerInput.value
+        ? "The selected provider has not yet been connected to a verified package catalogue."
+        : "Select a TV provider first.";
+    });
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const provider = providerInput.value;
+      const smartcard = smartcardInput.value.trim();
+
+      if (!provider) {
+        providerInput.reportValidity();
+        return;
+      }
+
+      if (!/^[A-Za-z0-9-]{6,30}$/.test(smartcard)) {
+        smartcardInput.setCustomValidity(
+          "Enter a decoder number containing 6 to 30 letters, numbers, or hyphens."
+        );
+        smartcardInput.reportValidity();
+        return;
+      }
+
+      smartcardInput.setCustomValidity("");
+
+      // Prevent submission until a real package is available.
+      if (!packageInput.value) {
+        packageHint.textContent =
+          "You can review the provider and decoder number, but a subscription cannot proceed until verified packages are available.";
+        packageHint.style.color = "#f4c66a";
+        reviewDetails.textContent =
+          "Provider: " + provider +
+          " | Decoder Number: " + smartcard +
+          " | Package: Not selected";
+        review.classList.remove("hidden");
+        review.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest"
+        });
+        return;
+      }
+
+      reviewDetails.textContent =
+        "Provider: " + provider +
+        " | Decoder Number: " + smartcard +
+        " | Package: " + packageInput.value;
+
+      review.classList.remove("hidden");
+      review.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+      });
+    });
+
+    smartcardInput.addEventListener("input", () => {
+      smartcardInput.setCustomValidity("");
+    });
+  </script>
+</body>
+  </html>
