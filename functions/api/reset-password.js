@@ -47,7 +47,7 @@ const toBase64 = (bytes) =>
 btoa(String.fromCharCode(...bytes));
 
 return (
-"pbkdf2_sha256$600000$${toBase64(salt)}$" +
+`pbkdf2_sha256$600000$${toBase64(salt)}$` +
 toBase64(new Uint8Array(result))
 );
 }
