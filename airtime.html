@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101713">
+  <title>Buy Airtime | QuickSub">
+
+  <style>
+    :root {
+      --background: #101713;
+      --surface: #19231d;
+      --green: #35d07f;
+      --text: #f5f7f5;
+      --muted: #a8b5ac;
+      --border: #2d3b32;
+      --warning: #f4c66a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      padding: 18px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: var(--green);
+    }
+
+    .back-link {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    main {
+      width: min(100% - 36px, 650px);
+      margin: 40px auto;
+    }
+
+    .eyebrow {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: clamp(30px, 6vw, 42px);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+
+    .panel h2 {
+      font-size: 19px;
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    select,
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--background);
+      color: var(--text);
+      font-size: 16px;
+      outline: none;
+    }
+
+    select:focus,
+    input:focus {
+      border-color: var(--green);
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 7px;
+    }
+
+    .amount-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 12px 0 20px;
+    }
+
+    .amount-option {
+      background: var(--background);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 12px 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .amount-option:hover,
+    .amount-option.active {
+      border-color: var(--green);
+      color: var(--green);
+    }
+
+    .notice {
+      padding: 15px;
+      background: #29251a;
+      border: 1px solid #554626;
+      color: var(--warning);
+      border-radius: 10px;
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 9px;
+      background: var(--green);
+      color: #092014;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .secondary-link {
+      display: block;
+      color: var(--green);
+      text-align: center;
+      margin-top: 17px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .message {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 20px;
+    }
+
+    .message strong {
+      display: block;
+      margin-bottom: 7px;
+    }
+
+    .message p {
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    footer {
+      margin-top: 55px;
+      padding: 24px 15px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 16px 18px;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+
+      main {
+        margin-top: 30px;
+      }
+
+      .panel {
+        padding: 18px;
+      }
+
+      .amount-grid {
+        gap: 7px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="logo" href="index.html">Quick<span>Sub</span></a>
+    <a class="back-link" href="index.html">← Home</a>
+  </header>
+
+  <main>
+    <p class="eyebrow">Quick & Convenient</p>
+    <h1>Buy Airtime</h1>
+
+    <p class="intro">
+      Select your mobile network, enter the recipient's number, and choose
+      how much airtime you want to purchase.
+    </p>
+
+    <form id="airtimeForm" class="panel">
+      <h2>Recipient Details</h2>
+
+      <div class="field">
+        <label for="network">Mobile Network</label>
+        <select id="network" name="network" required>
+          <option value="">Choose a network</option>
+          <option value="MTN">MTN</option>
+          <option value="Airtel">Airtel</option>
+          <option value="Glo">Glo</option>
+          <option value="9mobile">9mobile</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="phone">Recipient's Phone Number</label>
+        <input
+          id="phone"
+          name="phone"
+          type="tel"
+          inputmode="tel"
+          autocomplete="tel"
+          placeholder="e.g. 08012345678"
+          minlength="7"
+          maxlength="20"
+          required
+        >
+        <p class="hint">Check the number carefully before continuing.</p>
+      </div>
+
+      <div class="field">
+        <label for="amount">Airtime Amount (₦)</label>
+        <input
+          id="amount"
+          name="amount"
+          type="number"
+          inputmode="numeric"
+          min="50"
+          max="50000"
+          step="1"
+          placeholder="Enter amount"
+          required
+        >
+        <p class="hint">Enter an amount between ₦50 and ₦50,000.</p>
+      </div>
+
+      <p style="font-size: 13px; color: var(--muted);">
+        Or choose a suggested amount:
+      </p>
+
+      <div class="amount-grid">
+        <button class="amount-option" type="button" data-amount="100">
+          ₦100
+        </button>
+        <button class="amount-option" type="button" data-amount="200">
+          ₦200
+        </button>
+        <button class="amount-option" type="button" data-amount="500">
+          ₦500
+        </button>
+        <button class="amount-option" type="button" data-amount="1000">
+          ₦1,000
+        </button>
+        <button class="amount-option" type="button" data-amount="2000">
+          ₦2,000
+        </button>
+        <button class="amount-option" type="button" data-amount="5000">
+          ₦5,000
+        </button>
+      </div>
+
+      <div class="notice">
+        <strong>Purchase not yet enabled.</strong>
+        You can review your details, but this page will not submit an order
+        or deduct money from a wallet.
+      </div>
+
+      <button class="button" type="submit">Review Airtime Order</button>
+
+      <a class="secondary-link" href="dashboard.html">
+        Return to Dashboard
+      </a>
+    </form>
+
+    <section id="review" class="message hidden" aria-live="polite">
+      <strong>Review Your Airtime Details</strong>
+      <p id="reviewDetails"></p>
+      <p style="margin-top: 10px;">
+        This is a review only. No transaction has been submitted.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> QuickSub. All rights reserved.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    const form = document.getElementById("airtimeForm");
+    const networkInput = document.getElementById("network");
+    const phoneInput = document.getElementById("phone");
+    const amountInput = document.getElementById("amount");
+    const review = document.getElementById("review");
+    const reviewDetails = document.getElementById("reviewDetails");
+    const amountButtons = document.querySelectorAll("[data-amount]");
+
+    amountButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        amountInput.value = button.dataset.amount;
+
+        amountButtons.forEach(item => {
+          item.classList.toggle("active", item === button);
+        });
+      });
+    });
+
+    amountInput.addEventListener("input", () => {
+      amountButtons.forEach(button => {
+        button.classList.toggle(
+          "active",
+          button.dataset.amount === amountInput.value
+        );
+      });
+    });
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const network = networkInput.value;
+      const phone = phoneInput.value.trim();
+      const amount = Number(amountInput.value);
+
+      if (!network) {
+        networkInput.reportValidity();
+        return;
+      }
+
+      if (!/^\+?[0-9\s()-]{7,20}$/.test(phone)) {
+        phoneInput.setCustomValidity("Enter a valid phone number.");
+        phoneInput.reportValidity();
+        return;
+      }
+
+      phoneInput.setCustomValidity("");
+
+      if (
+        !Number.isSafeInteger(amount) ||
+        amount < 50 ||
+        amount > 50000
+      ) {
+        amountInput.setCustomValidity(
+          "Enter an amount between ₦50 and ₦50,000."
+        );
+        amountInput.reportValidity();
+        return;
+      }
+
+      amountInput.setCustomValidity("");
+
+      reviewDetails.textContent =
+        "Network: " + network +
+        " | Recipient: " + phone +
+        " | Airtime Amount: " +
+        new Intl.NumberFormat("en-NG", {
+          style: "currency",
+          currency: "NGN",
+          maximumFractionDigits: 0
+        }).format(amount);
+
+      review.classList.remove("hidden");
+      review.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+      });
+    });
+
+    phoneInput.addEventListener("input", () => {
+      phoneInput.setCustomValidity("");
+    });
+
+    amountInput.addEventListener("input", () => {
+      amountInput.setCustomValidity("");
+    });
+  </script>
+</body>
+  </html>
