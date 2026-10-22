@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1220">
+  <title>My Dashboard | QuickSub">
+
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #111c2e;
+      --card-hover: #17253a;
+      --text: #f8fafc;
+      --muted: #9caec4;
+      --green: #16a34a;
+      --green-light: #4ade80;
+      --border: #293950;
+      --danger: #f87171;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .navbar {
+      background: #0e1828;
+      border-bottom: 1px solid var(--border);
+      padding: 16px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      font-size: 26px;
+      font-weight: 800;
+    }
+
+    .brand span {
+      color: var(--green-light);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .nav-link {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .logout-button {
+      background: transparent;
+      color: var(--danger);
+      border: 1px solid #713535;
+      border-radius: 8px;
+      padding: 9px 13px;
+      cursor: pointer;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1150px;
+      padding: 30px 20px 50px;
+      margin: auto;
+    }
+
+    .welcome {
+      margin-bottom: 28px;
+    }
+
+    .welcome h1 {
+      font-size: 28px;
+      margin: 0 0 9px;
+    }
+
+    .welcome p {
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .wallet {
+      background: linear-gradient(120deg, #14532d, #166534, #0f3d2a);
+      border: 1px solid #267746;
+      border-radius: 18px;
+      padding: 25px;
+      margin-bottom: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .wallet-label {
+      font-size: 14px;
+      color: #dcfce7;
+      margin-bottom: 10px;
+    }
+
+    .wallet-balance {
+      font-size: 35px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      overflow-wrap: anywhere;
+    }
+
+    .wallet-note {
+      color: #dcfce7;
+      font-size: 12px;
+      margin-top: 9px;
+    }
+
+    .wallet-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 17px;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .button-light {
+      background: white;
+      color: #14532d;
+      border: 1px solid white;
+    }
+
+    .button-outline {
+      background: transparent;
+      color: white;
+      border: 1px solid #bbf7d0;
+    }
+
+    .section {
+      margin-bottom: 35px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 17px;
+    }
+
+    .section-heading h2 {
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .section-heading a {
+      color: var(--green-light);
+      font-size: 13px;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .service-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 21px;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .service-card:hover {
+      background: var(--card-hover);
+      transform: translateY(-2px);
+    }
+
+    .service-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 45px;
+      height: 45px;
+      background: #173b2b;
+      border-radius: 12px;
+      font-size: 23px;
+      margin-bottom: 15px;
+    }
+
+    .service-card h3 {
+      font-size: 16px;
+      margin: 0 0 8px;
+    }
+
+    .service-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .service-action {
+      display: inline-block;
+      margin-top: 17px;
+      color: var(--green-light);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      min-width: 0;
+    }
+
+    .panel h2 {
+      font-size: 18px;
+      margin: 0 0 18px;
+    }
+
+    .profile-row {
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .profile-row:last-child {
+      border-bottom: 0;
+    }
+
+    .profile-label {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .profile-value {
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    .transaction-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .transaction {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .transaction:last-child {
+      border-bottom: 0;
+    }
+
+    .transaction-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 7px;
+    }
+
+    .transaction-name {
+      font-size: 14px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .transaction-amount {
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .transaction-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .status {
+      text-transform: capitalize;
+      font-weight: 700;
+    }
+
+    .status.successful {
+      color: var(--green-light);
+    }
+
+    .status.pending {
+      color: #fbbf24;
+    }
+
+    .status.failed,
+    .status.reversed {
+      color: var(--danger);
+    }
+
+    .empty {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      padding: 10px 0;
+    }
+
+    .message {
+      display: none;
+      padding: 13px 15px;
+      margin-bottom: 20px;
+      border-radius: 9px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .message.error {
+      display: block;
+      color: #fecaca;
+      background: #351c27;
+      border: 1px solid #713545;
+    }
+
+    .message.info {
+      display: block;
+      color: #dbeafe;
+      background: #172a43;
+      border: 1px solid #2d4b70;
+    }
+
+    .support-box {
+      margin-top: 30px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+    }
+
+    .support-box h2 {
+      font-size: 18px;
+      margin: 0 0 8px;
+    }
+
+    .support-box p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    footer {
+      padding: 22px 15px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 750px) {
+      .services {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .wallet-balance {
+        font-size: 30px;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .navbar {
+        padding: 15px 16px;
+      }
+
+      .brand {
+        font-size: 23px;
+      }
+
+      .nav-right {
+        gap: 10px;
+      }
+
+      .nav-link {
+        display: none;
+      }
+
+      .container {
+        padding: 25px 15px 35px;
+      }
+
+      .welcome h1 {
+        font-size: 24px;
+      }
+
+      .services {
+        grid-template-columns: 1fr;
+      }
+
+      .service-card {
+        padding: 18px;
+      }
+
+      .wallet {
+        padding: 21px;
+      }
+
+      .wallet-actions {
+        width: 100%;
+      }
+
+      .wallet-actions .button {
+        flex: 1;
+      }
+
+      .transaction-top {
+        flex-direction: column;
+        gap: 6px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="navbar">
+    <a class="brand" href="index.html">Quick<span>Sub</span></a>
+
+    <div class="nav-right">
+      <a class="nav-link" href="index.html">Homepage</a>
+      <button class="logout-button" id="logoutButton" type="button">
+        Log out
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="pageMessage" class="message" role="alert" aria-live="polite"></div>
+
+    <section class="welcome">
+      <h1>Welcome, <span id="customerName">Customer</span>!</h1>
+      <p>Manage your QuickSub account and digital services from one place.</p>
+    </section>
+
+    <section class="wallet">
+      <div>
+        <div class="wallet-label">Available wallet balance</div>
+        <div class="wallet-balance" id="walletBalance">Loading...</div>
+        <div class="wallet-note">
+          Your balance will update when your account information loads.
+        </div>
+      </div>
+
+      <div class="wallet-actions">
+        <a class="button button-light" href="#services">Buy a Service</a>
+        <a class="button button-outline" href="#transactions">Transactions</a>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="section-heading">
+        <h2>Our Services</h2>
+      </div>
+
+      <div class="services">
+        <a class="service-card" href="data.html">
+          <div class="service-icon" aria-hidden="true">📶</div>
+          <h3>Data Bundles</h3>
+          <p>Explore available mobile data plans and categories.</p>
+          <span class="service-action">Explore Data →</span>
+        </a>
+
+        <a class="service-card" href="airtime.html">
+          <div class="service-icon" aria-hidden="true">📱</div>
+          <h3>Airtime</h3>
+          <p>Recharge a mobile phone with airtime.</p>
+          <span class="service-action">Buy Airtime →</span>
+        </a>
+
+        <a class="service-card" href="electricity.html">
+          <div class="service-icon" aria-hidden="true">💡</div>
+          <h3>Electricity</h3>
+          <p>Access electricity payment services when available.</p>
+          <span class="service-action">Pay Electricity →</span>
+        </a>
+
+        <a class="service-card" href="cable-tv.html">
+          <div class="service-icon" aria-hidden="true">📺</div>
+          <h3>Cable TV</h3>
+          <p>Manage supported television subscription services.</p>
+          <span class="service-action">View Options →</span>
+        </a>
+
+        <a class="service-card" href="educational-pins.html">
+          <div class="service-icon" aria-hidden="true">🎓</div>
+          <h3>Educational Pins</h3>
+          <p>Access supported examination PIN products.</p>
+          <span class="service-action">View Options →</span>
+        </a>
+
+        <a class="service-card" href="saved-numbers.html">
+          <div class="service-icon" aria-hidden="true">📇</div>
+          <h3>Saved Numbers</h3>
+          <p>Manage saved recipients for convenient future purchases.</p>
+          <span class="service-action">Manage Numbers →</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="info-grid">
+        <div class="panel" id="account">
+          <h2>Account Details</h2>
+
+          <div class="profile-row">
+            <div class="profile-label">Full name</div>
+            <div class="profile-value" id="profileName">Loading...</div>
+          </div>
+
+          <div class="profile-row">
+            <div class="profile-label">Email address</div>
+            <div class="profile-value" id="profileEmail">Loading...</div>
+          </div>
+
+          <div class="profile-row">
+            <div class="profile-label">Phone number</div>
+            <div class="profile-value" id="profilePhone">Loading...</div>
+          </div>
+        </div>
+
+        <div class="panel" id="transactions">
+          <div class="section-heading">
+            <h2>Recent Transactions</h2>
+          </div>
+
+          <div id="transactionList" class="transaction-list">
+            <p class="empty">Loading your transactions...</p>
+          </div>
+
+          <a class="service-action" href="transactions.html">
+            View Transaction History →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="support-box">
+      <h2>Need Help?</h2>
+      <p>
+        If you have a question about your account or a transaction, contact
+        QuickSub support. Never share your password with anyone.
+      </p>
+      <br>
+      <a class="button button-outline" href="contact.html">Contact Support</a>
+    </section>
+  </main>
+
+  <footer>
+    &copy; <span id="year"></span> QuickSub. All rights reserved.
+  </footer>
+
+  <script>
+    const pageMessage = document.getElementById("pageMessage");
+    const logoutButton = document.getElementById("logoutButton");
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    function showPageMessage(text, type = "info") {
+      pageMessage.textContent = text;
+      pageMessage.className = "message " + type;
+    }
+
+    function formatNaira(minorUnits) {
+      const amount = Number(minorUnits);
+
+      if (!Number.isSafeInteger(amount) || amount < 0) {
+        return "Unavailable";
+      }
+
+      return new Intl.NumberFormat("en-NG", {
+        style: "currency",
+        currency: "NGN",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(amount / 100);
+    }
+
+    function safeText(value, fallback = "Not available") {
+      return typeof value === "string" && value.trim()
+        ? value
+        : fallback;
+    }
+
+    async function loadDashboard() {
+      try {
+        const response = await fetch("/api/dashboard", {
+          method: "GET",
+          credentials: "same-origin",
+          cache: "no-store"
+        });
+
+        if (response.status === 401 || response.status === 403) {
+          window.location.replace("login.html");
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error("Dashboard request failed.");
+        }
+
+        const result = await response.json();
+
+        if (!result.success || !result.customer) {
+          throw new Error("Account information is unavailable.");
+        }
+
+        const customer = result.customer;
+
+        document.getElementById("customerName").textContent =
+          safeText(customer.full_name, "Customer").split(" ")[0];
+
+        document.getElementById("profileName").textContent =
+          safeText(customer.full_name);
+
+        document.getElementById("profileEmail").textContent =
+          safeText(customer.email);
+
+        document.getElementById("profilePhone").textContent =
+          safeText(customer.phone);
+
+        if (
+          result.wallet &&
+          Number.isSafeInteger(result.wallet.balance_minor) &&
+          result.wallet.balance_minor >= 0
+        ) {
+          document.getElementById("walletBalance").textContent =
+            formatNaira(result.wallet.balance_minor);
+        } else {
+          document.getElementById("walletBalance").textContent =
+            "Unavailable";
+        }
+
+        await loadTransactions();
+      } catch (error) {
+        showPageMessage(
+          "We couldn't load your dashboard. Please check your connection and try again.",
+          "error"
+        );
+
+        document.getElementById("walletBalance").textContent =
+          "Unavailable";
+
+        document.getElementById("transactionList").innerHTML =
+          '<p class="empty">Transactions could not be loaded.</p>';
+      }
+    }
+
+    async function loadTransactions() {
+      const list = document.getElementById("transactionList");
+
+      try {
+        const response = await fetch("/api/transactions?page=1&limit=5", {
+          method: "GET",
+          credentials: "same-origin",
+          cache: "no-store"
+        });
+
+        if (response.status === 401 || response.status === 403) {
+          window.location.replace("login.html");
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error("Transaction request failed.");
+        }
+
+        const result = await response.json();
+
+        if (!result.success || !Array.isArray(result.transactions)) {
+          throw new Error("Invalid transaction response.");
+        }
+
+        if (result.transactions.length === 0) {
+          list.innerHTML =
+            '<p class="empty">You have no transactions yet. Your transactions will appear here after you start using QuickSub.</p>';
+          return;
+        }
+
+        list.replaceChildren();
+
+        for (const transaction of result.transactions) {
+          const item = document.createElement("div");
+          item.className = "transaction";
+
+          const top = document.createElement("div");
+          top.className = "transaction-top";
+
+          const name = document.createElement("div");
+          name.className = "transaction-name";
+          name.textContent = safeText(
+            transaction.service_type,
+            "Service"
+          ).replaceAll("_", " ");
+
+          const amount = document.createElement("div");
+          amount.className = "transaction-amount";
+          amount.textContent = formatNaira(transaction.amount_minor);
+
+          top.append(name, amount);
+
+          const bottom = document.createElement("div");
+          bottom.className = "transaction-bottom";
+
+          const status = document.createElement("span");
+          const validStatuses = [
+            "pending",
+            "successful",
+            "failed",
+            "reversed"
+          ];
+
+          const transactionStatus =
+            typeof transaction.status === "string" &&
+            validStatuses.includes(transaction.status)
+              ? transaction.status
+              : "pending";
+
+          status.className = "status " + transactionStatus;
+          status.textContent = transactionStatus;
+
+          const date = document.createElement("span");
+          date.textContent = safeText(transaction.created_at);
+
+          bottom.append(status, date);
+          item.append(top, bottom);
+          list.appendChild(item);
+        }
+      } catch (error) {
+        list.innerHTML =
+          '<p class="empty">Your transaction history is temporarily unavailable.</p>';
+      }
+    }
+
+    logoutButton.addEventListener("click", async () => {
+      logoutButton.disabled = true;
+      logoutButton.textContent = "Logging out...";
+
+      try {
+        const response = await fetch("/api/logout", {
+          method: "POST",
+          credentials: "same-origin",
+          cache: "no-store"
+        });
+
+        if (!response.ok) {
+          showPageMessage(
+            "Logout could not be confirmed. Please try again.",
+            "error"
+          );
+          return;
+        }
+
+        window.location.replace("login.html");
+      } catch (error) {
+        showPageMessage(
+          "We couldn't contact the server. Please try logging out again.",
+          "error"
+        );
+      } finally {
+        logoutButton.disabled = false;
+        logoutButton.textContent = "Log out";
+      }
+    });
+
+    loadDashboard();
+  </script>
+</body>
+  </html>
