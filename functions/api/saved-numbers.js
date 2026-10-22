@@ -72,7 +72,7 @@ if (!label || label.length > 50) {
 return { error: "Enter a label of 1 to 50 characters." };
 }
 
-if (!/^+?[0-9\s()-]{7,20}$/.test(phone)) {
+if (!/^\+?[0-9\s()-]{7,20}$/.test(phone)) {
 return { error: "Enter a valid phone number." };
 }
 
